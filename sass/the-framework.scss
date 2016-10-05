@@ -1,0 +1,562 @@
+@import "fonts";
+@import "variables";
+@import "bootstrap";
+@import "bootstrap-rtl";
+@import "font-awesome";
+@import "tf-selectize";
+@import "tf-switch";
+@import "tf-datepicker";
+@import "tf-image-slider";
+* {
+    -webkit-overflow-scrolling: touch;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+*:not(input):not(textarea) {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+}
+
+*:focus {
+    outline: none !important;
+}
+
+a,
+a:hover,
+a:focus {
+    text-decoration: blink;
+    cursor: pointer;
+}
+
+html,
+body {
+    overflow: hidden;
+    height: 100%;
+    box-sizing: border-box
+}
+
+
+/* global classes */
+
+.rtl {
+    direction: rtl;
+}
+
+.ltr {
+    direction: ltr;
+}
+
+.middle {
+    vertical-align: middle;
+}
+
+.baseline {
+    vertical-align: baseline;
+}
+
+.pointer {
+    cursor: pointer;
+}
+
+.no-margin {
+    margin: 0 !important;
+}
+
+.no-border {
+    border: none !important;
+}
+
+.no-padding {
+    padding: 0 !important;
+}
+
+.horizontal-padding {
+    padding-left: $horizontal-padding;
+    padding-right: $horizontal-padding;
+}
+
+.vertical-padding {
+    padding-top: $vertical-padding;
+    padding-bottom: $vertical-padding;
+}
+
+.inline {
+    display: inline;
+}
+
+.inline-block {
+    display: inline-block;
+}
+
+.block {
+    display: block;
+}
+
+.full-width {
+    width: 100%;
+}
+
+.half-width {
+    width: 50%;
+}
+
+.clear-fix {
+    clear: both !important;
+}
+
+hr {
+    border-top-width: 1px;
+}
+
+.monospace {
+    font-family: monospace;
+}
+
+.hide {
+    display: none;
+}
+
+.hidden {
+    visibility: hidden;
+}
+
+
+/* animations, spin */
+
+@-webkit-keyframes spin {
+    from {
+        -o-transform: rotate(0deg);
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg)
+    }
+    to {
+        -o-transform: rotate(359deg);
+        -webkit-transform: rotate(359deg);
+        transform: rotate(359deg)
+    }
+}
+
+@-o-keyframes spin {
+    from {
+        -o-transform: rotate(0deg);
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg)
+    }
+    to {
+        -o-transform: rotate(359deg);
+        -webkit-transform: rotate(359deg);
+        transform: rotate(359deg)
+    }
+}
+
+@keyframes spin {
+    from {
+        -o-transform: rotate(0deg);
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg)
+    }
+    to {
+        -o-transform: rotate(359deg);
+        -webkit-transform: rotate(359deg);
+        transform: rotate(359deg)
+    }
+}
+
+
+/* animations, tfloading */
+
+@-webkit-keyframes tfloading {
+    from {
+        background: rgba($theme-color, 0.1);
+    }
+    to {
+        background: $theme-color;
+    }
+}
+
+@-o-keyframes tfloading {
+    from {
+        background: rgba($theme-color, 0.1);
+    }
+    to {
+        background: $theme-color;
+    }
+}
+
+@keyframes tfloading {
+    from {
+        background: rgba($theme-color, 0.1);
+    }
+    to {
+        background: $theme-color;
+    }
+}
+
+
+/* tf classes */
+
+.tf-view {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    left: 0;
+    top: 0;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    align-content: stretch;
+    justify-content: flex-start;
+    opacity: 1;
+    -webkit-transition-duration: $animation-speed-normal;
+    transition-duration: $animation-speed-normal;
+    -webkit-transform: translate3d(0, 0, 0) scale(1, 1);
+    transform: translate3d(0, 0, 0) scale(1, 1);
+    transition-timing-function: ease-out;
+    -webkit-transition-timing-function: ease-out;
+    & > * {
+        margin: 0;
+    }
+    &.ng-enter {
+        z-index: 0;
+    }
+    &.ng-leave {
+        z-index: 1;
+    }
+    &.tf-view-fade {
+        &.ng-leave-active {
+            opacity: 0;
+        }
+    }
+    &.tf-view-slide-left {
+        &.ng-leave-active {
+            opacity: 0;
+            -webkit-transform: translate3d(#{$navbar-height*-5}, 0, 0);
+            transform: translate3d(#{$navbar-height*-5}, 0, 0);
+        }
+    }
+    &.tf-view-slide-right {
+        &.ng-leave-active {
+            opacity: 0;
+            -webkit-transform: translate3d(#{$navbar-height*5}, 0, 0);
+            transform: translate3d(#{$navbar-height*5}, 0, 0);
+        }
+    }
+    &.tf-view-slide-down {
+        &.ng-leave-active {
+            opacity: 0;
+            -webkit-transform: translate3d(0, #{$navbar-height*1.2}, 0);
+            transform: translate3d(0, #{$navbar-height*1.2}, 0);
+        }
+    }
+    &.tf-view-slide-up {
+        &.ng-leave-active {
+            opacity: 0;
+            -webkit-transform: translate3d(0, #{$navbar-height*-1.2}, 0);
+            transform: translate3d(0, #{$navbar-height*-1.2}, 0);
+        }
+    }
+    &.tf-view-zoom {
+        &.ng-leave-active {
+            opacity: 0;
+            -webkit-transform: scale(1.2, 1.2);
+            transform: scale(1.2, 1.2);
+        }
+    }
+}
+
+.tf-container {
+    overflow: auto;
+}
+
+.tf-navbar,
+.tf-searchbar {
+    background: $theme-color;
+    color: #fff;
+    box-shadow: $long-shadow;
+    line-height: 1;
+    width: 100%;
+    max-width: 100%;
+    height: $navbar-height;
+    min-height: $navbar-height;
+    max-height: $navbar-height;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    & > * {
+        margin: 0;
+        min-width: $navbar-height;
+        width: auto;
+        text-align: center;
+        vertical-align: middle;
+        &.icon,
+        &.button {
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: -webkit-flex;
+            display: flex;
+            -webkit-box-align: center;
+            -webkit-align-items: center;
+            align-items: center;
+            -webkit-justify-content: center;
+            justify-content: center;
+            height: $navbar-height;
+        }
+        &.icon {
+            font-size: $font-size-h4;
+            &:not(.button) {
+                font-size: $font-size-h2;
+            }
+            & > * {
+                vertical-align: middle;
+            }
+        }
+        &.button {
+            cursor: pointer;
+            background-color: $theme-color; //darken( $theme-color, 5%); //rgba(0, 0, 0, 0.07);
+            padding: 0 $horizontal-padding/2;
+            &[disabled] {
+                opacity: 0.4;
+            }
+            &:active {
+                background-color: lighten( $theme-color, 5%);
+            }
+        }
+        &.title {
+            padding: 0 $horizontal-padding/2;
+            text-align: right;
+            width: 100%;
+            & > * {
+                width: 100%;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                margin: 0;
+            }
+        }
+    }
+}
+
+.tf-navbar {
+    z-index: 19999;
+    transition-duration: $animation-speed-normal;
+    transform: translate3d(0, 0, 0);
+    &.ng-hide {
+        margin-bottom: -1 * $navbar-height;
+        transform: translate3d( 0, #{-1 * $navbar-height}, 0);
+    }
+}
+
+.tf-searchbar {
+    z-index: 39999;
+    position: absolute;
+    top: 0;
+    left: 0;
+    -webkit-transition-duration: $animation-speed-fast;
+    transition-duration: $animation-speed-fast;
+    transition-timing-function: ease-out;
+    -webkit-transition-timing-function: ease-out;
+    & .form-control {
+        float: right;
+        margin: 9.5px;
+        border: none;
+        border-radius: 16px;
+    }
+    &.ng-hide {
+        opacity: 0;
+    }
+}
+
+.tf-tabs {
+    $height: $navbar-height - ($navbar-height/6);
+    height: $height;
+    min-height: $height;
+    max-height: $height;
+    background: lighten($gray-lighter, 4%);
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    align-content: stretch;
+    justify-content: flex-start;
+    transition-duration: $animation-speed-normal;
+    overflow: hidden;
+    & > li {
+        text-align: center;
+        line-height: $height;
+        width: 100%;
+        border-bottom: solid 1px $gray-lighter;
+        color: lighten($theme-color, 10%);
+        cursor: pointer;
+        white-space: nowrap;
+        overflow: hidden;
+        &:active,
+        &.active {
+            color: $theme-color;
+            background: rgba(0, 0, 0, 0.02);
+        }
+        &.active {
+            border-bottom: solid 4px $theme-color;
+        }
+    }
+    &.ng-hide {
+        margin-bottom: -1 * $navbar-height;
+        opacity: 0;
+    }
+}
+
+.tf-overlay {
+    z-index: 29999;
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.2);
+    opacity: 1;
+    transition-duration: $animation-speed-normal;
+    &.ng-hide {
+        opacity: 0;
+    }
+}
+
+.tf-sidebar {
+    background: $body-bg;
+    padding: 0;
+    z-index: 30000;
+    position: fixed;
+    top: 0;
+    height: 100%;
+    overflow-y: auto;
+    width: $sidebar-width;
+    transition-duration: $animation-speed-normal;
+    transform: translate3d(0, 0, 0);
+    transition-timing-function: ease-out;
+    & > .list-group {
+        margin: 0;
+        cursor: pointer;
+        & > .list-group-item {
+            border-left: none;
+            border-right: none;
+        }
+    }
+    &.left {
+        left: 0;
+    }
+    &.right {
+        right: 0;
+    }
+    &.ng-hide {
+        transform: translate3d( #{-1 * $sidebar-width}, 0, 0);
+    }
+    &.right {
+        transform: translate3d( $sidebar-width, 0, 0);
+    }
+}
+
+.tf-bottom-sheet {
+    background: $body-bg;
+    padding: 0;
+    z-index: 30000;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    transition-duration: $animation-speed-normal;
+    transform: translate3d(0, 0, 0);
+    transition-timing-function: ease-out;
+    &.ng-hide {
+        transform: translate3d( 0, 100%, 0);
+    }
+    & > .tf-label {
+        padding: $vertical-padding $horizontal-padding;
+        font-size: 14px;
+        color: $gray;
+        margin: 0;
+    }
+    & > .content {
+        & > .list-group {
+            margin: 0;
+            cursor: pointer;
+            & > .list-group-item {
+                border: none;
+                & > i {
+                    font-size: 16px;
+                    margin-left: $horizontal-padding;
+                }
+            }
+        }
+    }
+}
+
+.tf-toast {
+    width: 100%;
+    text-align: center;
+    position: fixed;
+    bottom: $horizontal-padding * 2;
+    z-index: 30002;
+    opacity: 1;
+    transition-duration: $animation-speed-fast;
+    & div {
+        margin: 0 auto;
+        padding: $padding-xs-horizontal $padding-small-horizontal;
+        font-size: $font-size-small;
+        border-radius: $border-radius-base;
+        background-color: $gray-dark;
+        color: $gray-lighter;
+        width: auto;
+        max-width: 75%;
+        display: inline-block;
+    }
+    &.ng-hide {
+        opacity: 0;
+    }
+}
+
+.tf-loading {
+    width: 100%;
+    text-align: center;
+    position: fixed;
+    bottom: $horizontal-padding * 2;
+    z-index: 30001;
+    transition-duration: $animation-speed-fast;
+    & div {
+        margin: 0 auto;
+        position: relative;
+        text-indent: -9999em;
+        border-top: $padding-base-vertical solid rgba($theme-color, 0.3);
+        border-right: $padding-base-vertical solid rgba($theme-color, 0.3);
+        border-bottom: $padding-base-vertical solid rgba($theme-color, 0.3);
+        border-left: $padding-base-vertical solid $theme-color;
+        animation: spin $animation-speed-slow infinite linear;
+        &,
+        &:after {
+            border-radius: 50%;
+            width: $input-height-small;
+            height: $input-height-small;
+        }
+    }
+    &.ng-hide {
+        opacity: 0;
+    }
+}
+
+.tf-floating-btn {
+    $tf-floating-height: 56px;
+    @extend .btn;
+    @extend .btn-primary;
+    position: fixed;
+    bottom: $horizontal-padding * 2;
+    right: $horizontal-padding * 2;
+    border-radius: $tf-floating-height;
+    width: $tf-floating-height;
+    height: $tf-floating-height;
+    box-shadow: $long-shadow;
+    opacity: 1;
+    transition-duration: $animation-speed-normal;
+    &.ng-hide {
+        opacity: 0;
+    }
+}

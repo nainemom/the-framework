@@ -1,0 +1,45 @@
+{
+    "name": "the-framework",
+    "version": "0.0.1",
+    "devDependencies": {
+        "grunt": "1.0.0",
+        "grunt-contrib-concat": "^1.0.1",
+        "grunt-contrib-cssmin": "^1.0.2",
+        "grunt-contrib-sass": "1.0.0",
+        "grunt-contrib-uglify": "^2.0.0",
+        "grunt-exec": "^1.0.1",
+        "http-server": "^0.9.0"
+    },
+    "dependencies": {
+        "angular": "1.5.8",
+        "angular-animate": "1.5.8",
+        "angular-route": "1.5.8",
+        "angular-touch": "1.5.8",
+        "browser-jquery": "^1.10.2",
+        "fastclick": "^1.0.6",
+        "moment": "^2.15.0",
+        "selectize": "0.12.1"
+    },
+    "description": "An AngularJs mobile first framework for the Persian community.",
+    "main": "gruntfile.js",
+    "scripts": {
+        "start": "grunt start"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/nainemom/the-framework.git"
+    },
+    "keywords": [
+        "persian",
+        "framework",
+        "angularjs",
+        "bootstrap",
+        "mobile"
+    ],
+    "author": "nainemom <nainemom@github.com>",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/nainemom/the-framework/issues"
+    },
+    "homepage": "https://github.com/nainemom/the-framework#readme"
+}

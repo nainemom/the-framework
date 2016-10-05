@@ -1,0 +1,35 @@
+.tf-datepicker {
+    z-index: 39999;
+    position: absolute;
+    min-width: 150px;
+    background: $text-color;
+    color: $body-bg;
+    margin-top: $padding-base-vertical;
+    @include box-shadow($long-shadow);
+    &,
+    & * {
+        text-align: center;
+    }
+    & > .j {
+        display: inline-block;
+        width: 33.333%;
+        max-width: 85px;
+        & > * {
+            padding: 10px 0;
+        }
+        &.active {
+            background: lighten($text-color, 5%);
+        }
+    }
+    & .button {
+        cursor: pointer;
+    }
+    & > .button {
+        border-top: solid 1px lighten($text-color, 10%);
+        padding: 12px 0;
+    }
+    & > .display {
+        background: $theme-color;
+        padding: 12px 0;
+    }
+}

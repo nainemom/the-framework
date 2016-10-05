@@ -1,0 +1,58 @@
+.tf-switch {
+    display: inline-block;
+    width: 45px;
+    height: $input-height-small - $input-height-small / 3;
+    //background: lighten( $input-border, 25%);
+    padding: $padding-xs-vertical $padding-xs-horizontal;
+    cursor: pointer;
+    //box-shadow: inset $short-shadow;
+    transition: all $animation-speed-xfast;
+    -webkit-transition: all $animation-speed-xfast;
+}
+
+.tf-switch.form-control {
+    @extend .form-control;
+    width: 40px + $padding-xs-horizontal * 2;
+    //background: lighten( $input-border, 25%);
+    padding: $padding-base-vertical $padding-xs-horizontal;
+}
+
+.tf-switch input {
+    // for getting focus
+    width: 0;
+    height: 0;
+    border: 0;
+    background: transparent;
+    position: absolute;
+}
+
+.tf-switch .switch-lever {
+    border-radius: 0;
+    width: 35%;
+    height: 100%;
+    display: block;
+    //box-shadow: none;
+    background-color: $input-border;
+    border-radius: 15px;
+    /* box-shadow: 0 2px 0 rgba(0,0,0,0.2); */
+    border-bottom: solid 1px $gray-dark;
+    border-top: solid 1px $gray-lighter;
+    transition: all $animation-speed-fast;
+    -webkit-transition: all $animation-speed-fast;
+}
+
+.tf-switch.checked .switch-lever {
+    margin-right: 65%;
+    background: $theme-color;
+}
+
+.tf-switch .switch-text {
+    float: left;
+    color: darken($input-border, 25%);
+}
+
+.tf-switch.checked .switch-text {
+    float: right;
+    color: $theme-color;
+    font-weight: bold;
+}

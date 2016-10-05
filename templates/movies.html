@@ -1,0 +1,31 @@
+<nav class="tf-navbar">
+    <section class="icon">
+        <i class="fa fa-github"></i>
+    </section>
+    <section class="title">
+        <h4>جست‌و‌جوی گیت‌هاب</h4>
+        <p ng-if="lastSearch != ''"> کلمه "{{lastSearch}}"</p>
+    </section>
+    <section class="icon button" ng-click="searchbar =! searchbar">
+        <i class="fa fa-search"></i>
+    </section>
+    <section class="icon button" tf-go="/page-one">
+        <i class="fa fa-arrow-left"></i>
+    </section>
+</nav>
+<tf-searchbar open="searchbar" search="search($text)"></tf-searchbar>
+<ul class="tf-tabs">
+    <li tf-go="/movies" class="active"> <i class="fa fa-github"></i> سرچ گیتهاب </li>
+    <li tf-go="/page-one"> <i class="fa fa-picture-o"></i> اسلاید‌شو </li>
+    <li tf-go="/forms"> <i class="fa fa-check-square-o"></i> فرم </li>
+</ul>
+<div class="tf-container" tf-scroll tf-scroll-bottom="search()" >
+    <ul class="list-group">
+        <li class="list-group-item ltr text-left" ng-repeat="item in items" ng-click="toast(item.description)">
+
+            <h5> <img ng-src="{{item.owner.avatar_url + '&s=18'}}" class="middle" width="18px" height="18px"/> <b class="middle">{{item.name}}</b> <span class="badge badge-info pull-right"> <i class="glyphicon glyphicon-star"></i> {{item.stargazers_count}} </span> </h5>
+            <p>{{item.description}}</p>
+
+        </li>
+    </ul>
+</div>
