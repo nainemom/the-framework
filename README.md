@@ -1,7 +1,7 @@
 # the-framework
 An AngularJs mobile first framework for the Persian community. I tried to write this as simple as i could to easy creating Cordova, Electron and normal web applications.
 
-#### Demo:
+#### Documention & Demo:
 [the-framework](http://nainemom.github.io/the-framework)
 
 #### Depends: ( bundled, no need to include manually )
