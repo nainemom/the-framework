@@ -1,0 +1,71 @@
+<nav class="tf-navbar">
+    <section class="icon">
+        <i class="fa" ng-class="currentItem().icon"></i>
+    </section>
+    <section class="title">
+        <h4 ng-bind="currentItem().alias"></h4>
+    </section>
+    <section class="icon button" tf-go="back">
+        <i class="fa fa-arrow-left"></i>
+    </section>
+</nav>
+<ul class="tf-tabs">
+    <li ng-class="{active: activeTab==0}" ng-click="activeTab=0"> <i class="fa fa-eye"></i> نمایش </li>
+    <li ng-class="{active: activeTab==1}" ng-click="activeTab=1"> <i class="fa fa-code"></i> توضیحات </li>
+</ul>
+<div class="tf-container horizontal-padding vertical-padding" ng-show="activeTab==0" style="min-height: 100%">
+    <div>
+        <div class="row">
+            <div class="form-group col-sm-6 col-xs-12">
+                <label class="control-label">انتخاب یک گزینه</label>
+                <tf-selectize class="form-control" options="options" ng-model="inputs.one"></tf-selectize>
+            </div>
+            <div class="form-group col-sm-6 col-xs-12">
+                <label class="control-label">انتخاب چند گزینه</label>
+                <tf-selectize class="form-control" multiple options="options" ng-model="inputs.two"></tf-selectize>
+            </div>
+            <div class="form-group col-sm-6 col-xs-12">
+                <label class="control-label">با قابلیت اضافه کردن</label>
+                <tf-selectize class="form-control" allow-create options="options" ng-model="inputs.three"></tf-selectize>
+            </div>
+            <div class="form-group col-sm-6 col-xs-12">
+                <label class="control-label">بدون قابلیت جست‌وجو</label>
+                <tf-selectize class="form-control disable-search" allow-create options="options" ng-model="inputs.three"></tf-selectize>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="tf-container horizontal-padding vertical-padding" ng-show="activeTab==1">
+    <p>
+        قابلیت‌ها:
+    </p>
+    <ul>
+        <li> هماهنگی با فرم‌های bootstrap با استفاده از کلاس form-control </li>
+        <li> امکان انتخاب یک یا چند گزینه توسط کاربر. </li>
+        <li> امکان غیرفعال کردن جست‌وجو. </li>
+        <li> امکان اضافه کردن گزینه توسط کاربر. </li>
+    </ul>
+    <p>
+        این دایرکتیو از پلاگین selectize جی‌کوئری برگردانده شده است. در نتیجه تمام قابلیت‌هاش در اینجا نیز قابل استفاده است.
+    </p>
+    <p>
+        برای انتخاب چند گزینه از اتریبیوت multiple، برای غیرفعال کردن جست‌وجو از کلاس disable-search و برای امکان اضافه‌کردن آیتم توسط کاربر از اتریبیوت allow-create استفاده کنید. همچنین گزینه‌های از پیش تعیین شده، در قالب آرایه در جاوااسکریپت مقدار گرفته و به
+        اتریبیوت options پاس داده می‌شوند. اتریبیوت ng-model هم به عنوان مدل این المنت استفاده می‌شود.
+    </p>
+
+    <pre>
+//html
+&lt;tf-selectize class=&quot;form-control&quot; allow-create multiple options=&quot;options&quot; ng-model=&quot;input&quot;&gt;
+&lt;/tf-selectize&gt;
+
+//js
+options = [
+    { text: 'Option One', value: 1},
+    { text: 'Option Two', value: 2},
+    { text: 'Option Tree', value: 3}
+];
+input = ''; /* picked item value by user */
+    </pre>
+</div>

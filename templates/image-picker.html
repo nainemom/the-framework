@@ -1,0 +1,47 @@
+<nav class="tf-navbar">
+    <section class="icon">
+        <i class="fa" ng-class="currentItem().icon"></i>
+    </section>
+    <section class="title">
+        <h4 ng-bind="currentItem().alias"></h4>
+    </section>
+    <section class="icon button" tf-go="back">
+        <i class="fa fa-arrow-left"></i>
+    </section>
+</nav>
+<ul class="tf-tabs">
+    <li ng-class="{active: activeTab==0}" ng-click="activeTab=0"> <i class="fa fa-eye"></i> نمایش </li>
+    <li ng-class="{active: activeTab==1}" ng-click="activeTab=1"> <i class="fa fa-code"></i> توضیحات </li>
+</ul>
+<div class="tf-container horizontal-padding vertical-padding" ng-show="activeTab==0">
+    <button class="btn btn-primary" tf-image-picker ng-model="file" ng-change="toast('فایل تغییر کرد!')"> انتخاب </button>
+</div>
+
+<div class="tf-container horizontal-padding vertical-padding" ng-show="activeTab==1">
+    <p>
+        قابلیت‌ها:
+    </p>
+    <ul>
+        <li> دریافت عکس در Cordova </li>
+        <li> قابلیت استفاده در المنت دلخواه </li>
+    </ul>
+    <p>
+        در Cordova و اندروید، انتخاب فایل به سادگی یک input از نوع فایل نیست. در آنجا باید از پلاگین‌های native استفاده کرد که خروجی آن‌ها با خروجی استاندارد browser متفاوت است. این دایرکتیو که به صورت اتریبیوت استفاده می‌شود، با توجه به پلتفرم مورد استفاده،
+        از نوع مناسب انتخاب فایل استفاده می‌کند و بر روی خروجی آن توسط پرووایدر tfHttp چه اندروید باشد و چه غیره، بدون مشکل به سرور فرستاده می‌شود.
+    </p>
+    <p>
+        اتریبیوت‌های ng-model و ng-change هم همانطور که از نامشان پیداست، برای دریافت مدل و فانکشن هنگام تغییر استفاده می‌شود.
+    </p>
+    <pre>
+//html
+&lt;button tf-image-picker ng-model=&quot;file&quot; ng-change=&quot;onChange&quot;&gt;
+    Browse...
+&lt;/button&gt;
+
+//js
+file = ''; /* file object, browsed by user */
+onChange = function(){
+    alert('file changed!');
+}
+    </pre>
+</div>

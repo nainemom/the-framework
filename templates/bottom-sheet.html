@@ -1,0 +1,70 @@
+<nav class="tf-navbar">
+    <section class="icon">
+        <i class="fa" ng-class="currentItem().icon"></i>
+    </section>
+    <section class="title">
+        <h4 ng-bind="currentItem().alias"></h4>
+    </section>
+    <section class="icon button" tf-go="back">
+        <i class="fa fa-arrow-left"></i>
+    </section>
+</nav>
+<ul class="tf-tabs">
+    <li ng-class="{active: activeTab==0}" ng-click="activeTab=0"> <i class="fa fa-eye"></i> نمایش </li>
+    <li ng-class="{active: activeTab==1}" ng-click="activeTab=1"> <i class="fa fa-code"></i> توضیحات </li>
+</ul>
+<div class="tf-container horizontal-padding vertical-padding" ng-show="activeTab==0">
+    <ul>
+        <li> امکان قرار دادن برچسب. </li>
+        <li> امکان قراردادن محتوای دل‌بخواه. </li>
+    </ul>
+    <div>
+        <button class="btn btn-primary" ng-click="sheets[0].visible = true"> به همراه برچسب </button>
+        <button class="btn btn-primary" ng-click="sheets[1].visible = true"> بدون برچسب </button>
+        <button class="btn btn-primary" ng-click="sheets[2].visible = true"> با محتوای دل‌بخواه </button>
+    </div>
+</div>
+<tf-bottom-sheet open="sheets[0].visible" label="برچسب اینجا">
+    <ul class="list-group block">
+        <li class="list-group-item">
+            <i class="fa fa-check"></i> ثبت
+        </li>
+        <li class="list-group-item">
+            <i class="fa fa-trash"></i> حذف
+        </li>
+        <li class="list-group-item">
+            <i class="fa fa-line-chart"></i> یک آیتم دیگر
+        </li>
+    </ul>
+</tf-bottom-sheet>
+<tf-bottom-sheet open="sheets[1].visible">
+    <ul class="list-group block">
+        <li class="list-group-item">
+            <i class="fa fa-thumbs-up"></i> پسندیدم
+        </li>
+        <li class="list-group-item">
+            <i class="fa fa-thumbs-down"></i> نپسندیدم
+        </li>
+    </ul>
+</tf-bottom-sheet>
+<tf-bottom-sheet open="sheets[2].visible" label="تصویر غذا">
+    <img src="http://lorempixel.com/500/300/food/10/" class="full-width" />
+</tf-bottom-sheet>
+<div class="tf-container horizontal-padding vertical-padding" ng-show="activeTab==1">
+    <pre>
+//html
+&lt;tf-bottom-sheet open=&quot;bottomSheet&quot; label=&quot;title of dialog&quot;&gt;
+    &lt;ul class=&quot;list-group block&quot;&gt;
+        &lt;li class=&quot;list-group-item&quot;&gt;
+            Item 1
+        &lt;/li&gt;
+        &lt;li class=&quot;list-group-item&quot;&gt;
+            Item 2
+        &lt;/li&gt;
+    &lt;/ul&gt;
+&lt;/tf-bottom-sheet&gt;
+
+//js
+bottomSheet = false; /* show = true, hide = false. */
+    </pre>
+</div>

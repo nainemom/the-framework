@@ -1,0 +1,41 @@
+<nav class="tf-navbar">
+    <section class="icon">
+        <i class="fa" ng-class="currentItem().icon"></i>
+    </section>
+    <section class="title">
+        <h4 ng-bind="currentItem().alias"></h4>
+    </section>
+    <section class="icon button" tf-go="back">
+        <i class="fa fa-arrow-left"></i>
+    </section>
+</nav>
+<ul class="tf-tabs">
+    <li ng-class="{active: activeTab==0}" ng-click="activeTab=0"> <i class="fa fa-eye"></i> نمایش </li>
+    <li ng-class="{active: activeTab==1}" ng-click="activeTab=1"> <i class="fa fa-code"></i> توضیحات </li>
+</ul>
+<div class="tf-container horizontal-padding vertical-padding" ng-show="activeTab==0">
+    <tf-image-slider ng-model="images" class="vertical-padding"></tf-image-slider>
+</div>
+
+<div class="tf-container horizontal-padding vertical-padding" ng-show="activeTab==1">
+    <p>
+        قابلیت‌ها:
+    </p>
+    <ul>
+        <li> امکان عقب و جلو کردن تصاویر با کشیدن انگشت به چپ و راست </li>
+    </ul>
+    <pre>
+//html
+&lt;tf-image-slider ng-model=&quot;images&quot;&gt;&lt;/tf-image-slider&gt;
+
+//js
+images = [{
+    src: 'images/1.jpg',
+    alt: 'The Beach'
+}, {
+    src: 'images/2.jpg'
+}, {
+    src: 'images/3.jpg'
+}]
+    </pre>
+</div>

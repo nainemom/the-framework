@@ -1,52 +1,197 @@
+var pages = [{
+    alias: 'تصاویر لغزنده (Image Slider)',
+    icon: 'fa-picture-o',
+    id: 'image-slider',
+    controller: 'ImageSlider'
+}, {
+    alias: 'جدول انتخاب پایین (Bottom Sheet)',
+    icon: 'fa-table',
+    id: 'bottom-sheet',
+    controller: 'BottomSheet'
+}, {
+    alias: 'نوار پیمایش (Navbar)',
+    icon: 'fa-header',
+    id: 'navbar'
+}, {
+    alias: 'نوار کناری (Sidebar)',
+    icon: 'fa-bars',
+    id: 'sidebar',
+    controller: 'Sidebar'
+}, {
+    alias: 'نوار جست‌وجو (Searchbar)',
+    icon: 'fa-search',
+    id: 'searchbar',
+    controller: 'Searchbar'
+}, {
+    alias: 'دکمه شناور (Floating Button)',
+    icon: 'fa-circle',
+    id: 'floating-btn',
+    controller: 'FloatingBtn'
+}, {
+    alias: 'انتخاب‌کننده تاریخ (Datepicker)',
+    icon: 'fa-calendar-o',
+    id: 'datepicker',
+    controller: 'Datepicker'
+}, {
+    alias: 'انتخاب آیتم از لیست (Dropdown)',
+    icon: 'fa-caret-down',
+    id: 'dropdown',
+    controller: 'Dropdown'
+}, {
+    alias: 'هدایت‌کننده صفحه (Conduction)',
+    icon: 'fa-arrow-left',
+    id: 'conduction',
+    controller: 'Conduction'
+}, {
+    alias: 'اسکرول (Scroll)',
+    icon: 'fa-arrows-v',
+    id: 'scroll',
+    controller: 'Scroll'
+}, {
+    alias: 'دستگیره (Switch)',
+    icon: 'fa-toggle-on',
+    id: 'switch',
+    controller: 'Switch'
+}, {
+    alias: 'تُست (Toast)',
+    icon: 'fa-bell-o',
+    id: 'toast',
+    controller: 'Toast'
+}, {
+    alias: 'لطفا صبر کنید! (Loading)',
+    icon: 'fa-circle-o-notch fa-spin',
+    id: 'loading',
+    controller: 'Loading'
+}, {
+    alias: 'انتخاب کننده تصویر! (Image Picker)',
+    icon: 'fa-file-image-o',
+    id: 'image-picker',
+    controller: 'ImagePicker'
+}, {
+    alias: 'ای‌جکس! (Ajax Provider)',
+    icon: 'fa-paper-plane',
+    id: 'ajax',
+    controller: 'Ajax'
+}]
 angular.module('app', ['theFramework'])
     .config(function($routeProvider, $tfHttpProvider) {
         $routeProvider
-            .when('/page-one', {
-                templateUrl: 'templates/page-one.html',
-                controller: 'PageOne'
-            })
-            .when('/page-two', {
-                templateUrl: 'templates/page-two.html',
-                controller: 'PageOne'
-            })
-            .when('/movies', {
-                templateUrl: 'templates/movies.html',
-                controller: 'Movies'
-            })
-            .when('/forms', {
-                templateUrl: 'templates/forms.html',
-                controller: 'Forms'
-            })
-            .when('/file', {
-                templateUrl: 'templates/file.html',
-                controller: 'File'
-            })
-            .otherwise({
-                redirectTo: '/page-one'
+            .when('/main', {
+                templateUrl: 'templates/main.html',
+                controller: 'Main'
+            }).otherwise({
+                redirectTo: '/main'
             });
-        $tfHttpProvider.address = 'https://api.github.com/search/repositories';
-        //console.log($tfHttpProvider);
-        //console.log($tfHttpProvider.address);
-        //$tfHttpProvider.z('hi');
+        for (var i in pages) {
+            $routeProvider.when('/' + pages[i].id, {
+                templateUrl: 'templates/' + pages[i].id + '.html',
+                controller: pages[i].controller
+            });
+        }
+    })
+    .run(function($rootScope, $location) {
+        $rootScope.activeTab = 0;
+        $rootScope.items = pages;
+        $rootScope.currentItem = function() {
+            var pageId = $location.path().substr(1);
+            var pageIndex = $rootScope.items.map(function(x) {
+                return x.id;
+            }).indexOf(pageId);
+            return pageIndex === -1 ? {} : $rootScope.items[pageIndex];
+        }
+    })
+    .controller('Main', function($scope, $location) {
 
     })
-    .controller('PageOne', function($scope, $theFramework, $timeout) {
-        $scope.sidebar = false;
-        $scope.floating = true;
-
-        $scope.toast = function() {
-            $theFramework.toast('ساعت الآن ' + Date.now() + ' است!');
-        }
+    .controller('ImageSlider', function($scope) {
         $scope.images = [{
-            src: 'images/1.jpg',
+            src: 'http://lorempixel.com/500/300/people/1/',
             alt: 'The Beach'
         }, {
-            src: 'images/2.jpg'
+            src: 'http://lorempixel.com/500/300/people/2/'
         }, {
-            src: 'images/3.jpg'
+            src: 'http://lorempixel.com/500/300/people/3/'
         }];
+    })
+    .controller('BottomSheet', function($scope) {
+        $scope.sheets = [
+            { visible: false },
+            { visible: false },
+            { visible: false }
+        ]
+    })
+    .controller('Sidebar', function($scope) {
+        $scope.bars = [
+            { visible: false },
+            { visible: false },
+            { visible: false }
+        ]
+    })
+    .controller('Searchbar', function($scope) {
+        $scope.bars = [
+            { visible: false },
+            { visible: false }
+        ]
+    })
+    .controller('FloatingBtn', function($scope) {
+        $scope.bars = [
+            { visible: false },
+            { visible: false }
+        ]
+    })
+    .controller('Datepicker', function($scope) {
+
+    })
+    .controller('Dropdown', function($scope) {
+        $scope.options = [
+            { text: '1 - ایکس شماره یک', value: 1 },
+            { text: '2 - ایکس شماره دو', value: 2 },
+            { text: '3 - ایکس شماره سه', value: 3 }
+        ];
         $scope.inputs = {};
-        $scope.lg = console.log;
+    })
+    .controller('Conduction', function($scope) {
+
+    })
+    .controller('Scroll', function($scope, $timeout) {
+        $scope.scrollDir = '';
+        $scope.scrollAtEnd = '';
+        $scope.$watch('scrollAtEnd', function() {
+            $timeout(function() {
+                $scope.scrollAtEnd = '';
+            }, 1500);
+        });
+    })
+    .controller('Switch', function($scope, $timeout) {
+        $scope.scrollDir = '';
+    })
+    .controller('Toast', function($scope, $theFramework) {
+        $scope.toast = $theFramework.toast;
+    })
+    .controller('Loading', function($scope, $theFramework) {
+        $scope.loading = $theFramework.loading;
+    })
+    .controller('ImagePicker', function($scope) {
+        $scope.file = '';
+    })
+    .controller('Ajax', function($scope, $tfHttp, $theFramework) {
+        $scope.result = [];
+        $scope.search = function() {
+            $theFramework.loading(true);
+            var data = {
+                sort: 'stars',
+                order: 'desc',
+                q: 'angular',
+                page: 1
+            }
+            var url = 'https://api.github.com/search/repositories';
+            $tfHttp.get(url, data).then(function(response) {
+                var totalLen = response.data.total_count || 0;
+                $scope.result = response.data.items || [];
+                $theFramework.loading(false);
+                $theFramework.toast(totalLen + ' ریپازیتوری پیدا شد!');
+            })
+        }
     })
     .controller('Movies', function($scope, $theFramework, $http, $timeout, $tfHttp) {
         $scope.searchbar = false;

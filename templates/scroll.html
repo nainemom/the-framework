@@ -1,0 +1,77 @@
+<nav class="tf-navbar">
+    <section class="icon">
+        <i class="fa" ng-class="currentItem().icon"></i>
+    </section>
+    <section class="title">
+        <h4 ng-bind="currentItem().alias"></h4>
+    </section>
+    <section class="icon button" tf-go="back">
+        <i class="fa fa-arrow-left"></i>
+    </section>
+</nav>
+<ul class="tf-tabs">
+    <li ng-class="{active: activeTab==0}" ng-click="activeTab=0"> <i class="fa fa-eye"></i> نمایش </li>
+    <li ng-class="{active: activeTab==1}" ng-click="activeTab=1"> <i class="fa fa-code"></i> توضیحات </li>
+</ul>
+<div class="tf-container horizontal-padding vertical-padding" ng-show="activeTab==0">
+    <p>
+        با اسکرول باکس زیر بازی کنید!
+        <div style="color: red" ng-show="scrollDir=='up'">
+            جهت اسکرول: بالا!
+        </div>
+        <div style="color: purple" ng-show="scrollDir=='down'">
+            جهت اسکرول: پایین!
+        </div>
+        <div style="color: blue" ng-show="scrollAtEnd=='bottom'">
+            اسکرول به پایین صفحه رسید! (این یک متن موقتی است)
+        </div>
+        <div style="color: green" ng-show="scrollAtEnd=='top'">
+            اسکرول به بالای صفحه رسید! (این یک متن موقتی است)
+        </div>
+    </p>
+    <div style="height: 300px; overflow-y: scroll" tf-scroll tf-scroll-up="scrollDir='up'" tf-scroll-down="scrollDir='down'" tf-scroll-top="scrollAtEnd='top'" tf-scroll-bottom="scrollAtEnd='bottom'">
+        <p><span ng-repeat="i in [].constructor(300) track by $index">
+            این یک متن لورم‌ایپسوم هست که به دفعات تکرار شده است! {{$index}}
+        </span></p>
+    </div>
+</div>
+
+
+<div class="tf-container horizontal-padding vertical-padding" ng-show="activeTab==1">
+    <p>
+        قابلیت‌ها:
+    </p>
+    <ul>
+        <li> باخبر شدن از جهت اسکرول کاربر </li>
+        <li> باخبر شدن از رسیدن اسکرول به بالا و پایین صفحه </li>
+    </ul>
+    <p>
+        این یک اتریبیوت است. وقتی این اتریبیوت به یک المنت داده می‌شود، می‌توانید جهت اسکرول آن و همچنین رسیدن اسکرول به ابتدا یا ابتدای صفحه را با اتریبیوت‌های گوش کنید.
+    </p>
+    <ul>
+        <li> tf-scroll-up: گزارش اسکرول به سمت بالا </li>
+        <li> tf-scroll-down: گزارش اسکرول به سمت پایین </li>
+        <li> tf-scroll-top: گزارش رسیدن اسکرول به ابتدا </li>
+        <li> tf-scroll-bottom: گزارش رسیدن اسکرول به انتها </li>
+    </ul>
+    <pre>
+//html
+&lt;div tf-scroll tf-scroll-down=&quot;f1&quot; tf-scroll-up=&quot;f2&quot; tf-scroll-top=&quot;f3&quot; tf-scroll-bottom=&quot;f4&quot;&gt;
+    Content here
+&lt;/div&gt;
+
+//js
+f1 = function(){
+    //scrolling down
+}
+f2 = function(){
+    //scrolling up
+}
+f3 = function(){
+    //scroll at top of element
+}
+f4 = function(){
+    //scroll at bottom of element
+}
+    </pre>
+</div>

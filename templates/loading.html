@@ -1,0 +1,48 @@
+<nav class="tf-navbar">
+    <section class="icon">
+        <i class="fa" ng-class="currentItem().icon"></i>
+    </section>
+    <section class="title">
+        <h4 ng-bind="currentItem().alias"></h4>
+    </section>
+    <section class="icon button" tf-go="back">
+        <i class="fa fa-arrow-left"></i>
+    </section>
+</nav>
+<ul class="tf-tabs">
+    <li ng-class="{active: activeTab==0}" ng-click="activeTab=0"> <i class="fa fa-eye"></i> نمایش </li>
+    <li ng-class="{active: activeTab==1}" ng-click="activeTab=1"> <i class="fa fa-code"></i> توضیحات </li>
+</ul>
+<div class="tf-container horizontal-padding vertical-padding" ng-show="activeTab==0">
+    <div>
+        <button class="btn btn-primary" ng-click="loading(true)"> نمایش تا همیشه! </button>
+        <button class="btn btn-primary" ng-click="loading(true, 3500)"> نمایش به مدت مشخص </button>
+        <button class="btn btn-danger" ng-click="loading(false)"> اتمام دستی </button>
+    </div>
+</div>
+<div class="tf-container horizontal-padding vertical-padding" ng-show="activeTab==1">
+    <p>
+        قابلیت‌ها:
+    </p>
+    <ul>
+        <li> تعیین مدت زمان نمایش. </li>
+    </ul>
+    <p>
+        توجه داشته باشید که این قابلیت، توسط پرووایدر theFramework فراخوانی می‌شود. پس، theFramework باید به کنترلری که قصد نمایش toast را دارد پاس داده شود. همچنین دایرکتیو tf-components باید در صفحه موجود باشد.
+    </p>
+    <pre>
+//html
+&lt;tf-components&gt;
+&lt;/tf-components&gt;
+
+//js
+function Controller($theFramework){
+    /*
+        $theFramework.loading(showOrHide, [duration]);
+    */
+    $theFramework.loading(true, 3500); // show loading for 3.5 secs.
+    $theFramework.loading(true); // show loading forever.
+    $theFramework.loading(hide); // hide every opened loadings.
+}
+    </pre>
+</div>

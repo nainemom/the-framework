@@ -1,0 +1,46 @@
+<nav class="tf-navbar">
+    <section class="icon">
+        <i class="fa" ng-class="currentItem().icon"></i>
+    </section>
+    <section class="title">
+        <h4 ng-bind="currentItem().alias"></h4>
+    </section>
+    <section class="icon button" tf-go="back">
+        <i class="fa fa-arrow-left"></i>
+    </section>
+</nav>
+<ul class="tf-tabs">
+    <li ng-class="{active: activeTab==0}" ng-click="activeTab=0"> <i class="fa fa-eye"></i> نمایش </li>
+    <li ng-class="{active: activeTab==1}" ng-click="activeTab=1"> <i class="fa fa-code"></i> توضیحات </li>
+</ul>
+<div class="tf-container horizontal-padding vertical-padding" ng-show="activeTab==0">
+    <div>
+        <button class="btn btn-primary" ng-click="toast('حالت معمولی')"> معمولی </button>
+        <button class="btn btn-primary" ng-click="toast('نمایش به مدت چهار ثانیه!', 4000)"> نمایش به مدت مشخص </button>
+        <button class="btn btn-primary" ng-click="toast('این یک متن طولانی است. در صورتی که قصد داشته باشید یک متن نسبتا طولانی را نمایش دهید، به مشکلی نخواهید خورد.', 4000)"> متن طولانی </button>
+    </div>
+</div>
+<div class="tf-container horizontal-padding vertical-padding" ng-show="activeTab==1">
+    <p>
+        قابلیت‌ها:
+    </p>
+    <ul>
+        <li> تعیین مدت زمان نمایش. </li>
+    </ul>
+    <p>
+        توجه داشته باشید که این قابلیت، توسط پرووایدر theFramework فراخوانی می‌شود. پس، theFramework باید به کنترلری که قصد نمایش toast را دارد پاس داده شود. همچنین دایرکتیو tf-components باید در صفحه موجود باشد.
+    </p>
+    <pre>
+//html
+&lt;tf-components&gt;
+&lt;/tf-components&gt;
+
+//js
+function Controller($theFramework){
+    /*
+        $theFramework.toast('content', [duration]);
+    */
+    $theFramework.toast('Hi. This is toast test!', 3500); // show message for 3.5 secs.
+}
+    </pre>
+</div>

@@ -1,0 +1,102 @@
+<nav class="tf-navbar">
+    <section class="icon">
+        <i class="fa" ng-class="currentItem().icon"></i>
+    </section>
+    <section class="title">
+        <h4 ng-bind="currentItem().alias"></h4>
+    </section>
+    <section class="icon button" tf-go="back">
+        <i class="fa fa-arrow-left"></i>
+    </section>
+</nav>
+<ul class="tf-tabs">
+    <li ng-class="{active: activeTab==0}" ng-click="activeTab=0"> <i class="fa fa-eye"></i> نمایش </li>
+    <li ng-class="{active: activeTab==1}" ng-click="activeTab=1"> <i class="fa fa-code"></i> توضیحات </li>
+</ul>
+<div class="tf-container horizontal-padding vertical-padding" ng-show="activeTab==0">
+    <div>
+        <div>
+            <h4> مثال یک: </h4>
+            <nav class="tf-navbar">
+                <section class="icon">
+                    <i class="fa fa-facebook"></i>
+                </section>
+                <section class="title">
+                    <h4>فیسبوک</h4>
+                </section>
+                <section class="icon button">
+                    <i class="fa fa-arrow-left"></i>
+                </section>
+            </nav>
+            <h4> مثال دو: </h4>
+            <nav class="tf-navbar">
+                <section class="title">
+                    <h4>عنوان بدون لوگو</h4>
+                </section>
+                <section class="text button">
+                    دکمه
+                </section>
+            </nav>
+            <h4> مثال سه: </h4>
+            <nav class="tf-navbar">
+                <section class="icon">
+                    <i class="fa fa-twitter"></i>
+                </section>
+                <section class="title">
+                    <h4>توییتر</h4>
+                    <p>توضیحات اینجا قرار می‌گیرد.</p>
+                </section>
+                <section class="icon button">
+                    <i class="fa fa-search"></i>
+                </section>
+                <section class="icon button">
+                    <i class="fa fa-bars"></i>
+                </section>
+            </nav>
+        </div>
+    </div>
+</div>
+
+
+<div class="tf-container horizontal-padding vertical-padding" ng-show="activeTab==1">
+    <p>
+        قابلیت‌ها:
+    </p>
+    <ul>
+        <li> تعیین مکان محتوا به وسیله flexbox </li>
+        <li> امکان قرار دادن دکمه </li>
+        <li> امکان قرار دادن توضیحات </li>
+        <li> امکان قرار دادن لوگو </li>
+        <li> امکان اضافه و کم کردن بخش‌ها </li>
+    </ul>
+    <p>
+        هر section قابلیت حذف‌شدن دارد. همچنین کلاس‌های قابل استفاده برای هر بخش عبارت‌اند از:
+    </p>
+    <ul>
+        <li> icon: آیکن سایز بزرگ برای لوگو </li>
+        <li> title: نوشته عنوان </li>
+        <li> icon button: دکمه آیکن. مناسب برای سایدبار و... </li>
+        <li> icon text: دکمه نوشته. مناسب برای فعالیت‌های خاص. </li>
+    </ul>
+    <p>
+        در داخل هر section که کلاس icon دارد، می‌توانید از یک تگ i و کلاس آیکن‌های font-awesome استفاده کنید. همچنین در تگ عنوان که با کلاس title مشخص می‌شود، می‌توانید از دو تگ h4 برای عنوان اصلی و p برای توضیحات استفاده کنید. استفاده از تگ p اختیاری است.
+    </p>
+    <pre>
+//html
+&lt;nav class=&quot;tf-navbar&quot;&gt;
+    &lt;section class=&quot;icon&quot;&gt;
+        &lt;i class=&quot;fa fa-twitter&quot;&gt;&lt;/i&gt;
+    &lt;/section&gt;
+    &lt;section class=&quot;title&quot;&gt;
+        &lt;h4&gt;&#1593;&#1606;&#1608;&#1575;&#1606;&lt;/h4&gt;
+        &lt;p&gt;&#1578;&#1608;&#1590;&#1740;&#1581;&#1575;&#1578;&lt;/p&gt;
+    &lt;/section&gt;
+    &lt;section class=&quot;icon button&quot;&gt;
+        &lt;i class=&quot;fa fa-search&quot;&gt;&lt;/i&gt;
+    &lt;/section&gt;
+    &lt;section class=&quot;icon button&quot;&gt;
+        &lt;i class=&quot;fa fa-bars&quot;&gt;&lt;/i&gt;
+    &lt;/section&gt;
+&lt;/nav&gt;
+    </pre>
+</div>

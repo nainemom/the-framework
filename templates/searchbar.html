@@ -1,0 +1,52 @@
+<nav class="tf-navbar">
+    <section class="icon">
+        <i class="fa" ng-class="currentItem().icon"></i>
+    </section>
+    <section class="title">
+        <h4 ng-bind="currentItem().alias"></h4>
+    </section>
+    <section class="icon button" tf-go="back">
+        <i class="fa fa-arrow-left"></i>
+    </section>
+</nav>
+<ul class="tf-tabs">
+    <li ng-class="{active: activeTab==0}" ng-click="activeTab=0"> <i class="fa fa-eye"></i> نمایش </li>
+    <li ng-class="{active: activeTab==1}" ng-click="activeTab=1"> <i class="fa fa-code"></i> توضیحات </li>
+</ul>
+<div class="tf-container horizontal-padding vertical-padding" ng-show="activeTab==0">
+    <div>
+        <button class="btn btn-primary" ng-click="bars[0].visible = true"> حالت معمولی </button>
+        <button class="btn btn-primary" ng-click="bars[1].visible = true"> با متن دل‌بخواه </button>
+    </div>
+</div>
+<tf-searchbar open="bars[0].visible">
+</tf-searchbar>
+<tf-searchbar open="bars[1].visible" placeholder="بخشی از نام کاربر مورد نظر را وارد کنید...">
+</tf-searchbar>
+
+
+<div class="tf-container horizontal-padding vertical-padding" ng-show="activeTab==1">
+    <p>
+        قابلیت‌ها:
+    </p>
+    <ul>
+        <li> امکان قراردادن متن دل‌بخواه. </li>
+    </ul>
+    <p>
+        برای دریافت ایونت و متن درخواستی کاربر برای سرچ، می‌توانید از اتریبیوت search و برای تایین متن دل‌بخواه برای placeholder از اتریبیوتی به همین نام استفاده کنید.
+    </p>
+    <p>
+        توجه داشته باشید هنگامی که فانکشن ورودی اتریبیوت search را وارد می‌کنید، آرگومان متن ورودی کاربر را تحت عنوان $text به فانکشن پاس دهید!
+    </p>
+    <pre>
+//html
+&lt;tf-searchbar open=&quot;searchbar&quot; placeholder=&quot;{‌{placeholder}‌}&quot; search=&quot;startSearch($text)&quot;&gt;
+&lt;/tf-searchbar&gt;
+
+//js
+startSearch = function(searchText){
+    alert( 'start searching for '+ searchText)
+}
+searchbar = false; /* show = true, hide = false. */
+    </pre>
+</div>

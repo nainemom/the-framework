@@ -1,0 +1,80 @@
+<nav class="tf-navbar">
+    <section class="icon">
+        <i class="fa" ng-class="currentItem().icon"></i>
+    </section>
+    <section class="title">
+        <h4 ng-bind="currentItem().alias"></h4>
+    </section>
+    <section class="icon button" tf-go="back">
+        <i class="fa fa-arrow-left"></i>
+    </section>
+</nav>
+<ul class="tf-tabs">
+    <li ng-class="{active: activeTab==0}" ng-click="activeTab=0"> <i class="fa fa-eye"></i> نمایش </li>
+    <li ng-class="{active: activeTab==1}" ng-click="activeTab=1"> <i class="fa fa-code"></i> توضیحات </li>
+</ul>
+<div class="tf-container horizontal-padding vertical-padding" ng-show="activeTab==0">
+    <div>
+        <button class="btn btn-primary" ng-click="bars[0].visible = true"> از چپ </button>
+        <button class="btn btn-primary" ng-click="bars[1].visible = true"> از راست </button>
+        <button class="btn btn-primary" ng-click="bars[2].visible = true"> محتوای دل‌بخواه </button>
+    </div>
+</div>
+<tf-sidebar open="bars[0].visible">
+    <ul class="list-group">
+        <li class="list-group-item">
+            <i class="fa fa-sign-in"></i> ورود به سیستم
+        </li>
+        <li class="list-group-item">
+            <i class="fa fa-building"></i> شرکت‌ها
+        </li>
+        <li class="list-group-item">
+            <i class="fa fa-tags"></i> برندها
+        </li>
+    </ul>
+</tf-sidebar>
+<tf-sidebar open="bars[1].visible" direction="right">
+    <ul class="list-group">
+        <li class="list-group-item">
+            <i class="fa fa-sign-in"></i> ورود به سیستم
+        </li>
+        <li class="list-group-item">
+            <i class="fa fa-building"></i> شرکت‌ها
+        </li>
+        <li class="list-group-item">
+            <i class="fa fa-tags"></i> برندها
+        </li>
+    </ul>
+</tf-sidebar>
+<tf-sidebar open="bars[2].visible">
+    <img src="http://lorempixel.com/260/300/food/10/" class="full-width" />
+    <img src="http://lorempixel.com/260/300/food/9/" class="full-width" />
+    <img src="http://lorempixel.com/260/300/food/8/" class="full-width" />
+</tf-sidebar>
+
+<div class="tf-container horizontal-padding vertical-padding" ng-show="activeTab==1">
+    <p>
+        قابلیت‌ها:
+    </p>
+    <ul>
+        <li> امکان تعیین جهت بازشدن. </li>
+        <li> امکان قراردادن محتوای دل‌بخواه. </li>
+    </ul>
+    <pre>
+//html
+&lt;tf-sidebar open=&quot;sidebar&quot; direction=&quot;{‌{direction}‌}&quot;&gt;
+    &lt;ul class=&quot;list-group block&quot;&gt;
+        &lt;li class=&quot;list-group-item&quot;&gt;
+            Item 1
+        &lt;/li&gt;
+        &lt;li class=&quot;list-group-item&quot;&gt;
+            Item 2
+        &lt;/li&gt;
+    &lt;/ul&gt;
+&lt;/tf-sidebar&gt;
+
+//js
+direction = 'left'; /* or 'right' */
+sidebar = false; /* show = true, hide = false. */
+    </pre>
+</div>

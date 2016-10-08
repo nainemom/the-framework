@@ -1,0 +1,20 @@
+<nav class="tf-navbar">
+    <section class="icon">
+        <i class="fa fa-check-circle-o"></i>
+    </section>
+    <section class="title">
+        <h4>دِ فریم‌ورک!</h4>
+        <p> تلاشی برای هماهنگ کردن موبایل، دسکتاپ و وب </p>
+    </section>
+    <section class="icon button" ng-click="searchbar =! searchbar">
+        <i class="fa fa-search"></i>
+    </section>
+</nav>
+<tf-searchbar open="searchbar" search="search($text)" placeholder="بخشی از نام آیتم مورد نظر را وارد کنید..."></tf-searchbar>
+<div class="tf-container">
+    <ul class="list-group block pointer">
+        <li class="list-group-item" ng-repeat="item in items" tf-go="/{{item.id}}">
+            <i class="fa" ng-class="item.icon"></i> {{item.alias}}
+        </li>
+    </ul>
+</div>

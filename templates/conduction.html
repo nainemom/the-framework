@@ -1,0 +1,44 @@
+<nav class="tf-navbar">
+    <section class="icon">
+        <i class="fa" ng-class="currentItem().icon"></i>
+    </section>
+    <section class="title">
+        <h4 ng-bind="currentItem().alias"></h4>
+    </section>
+    <section class="icon button" tf-go="back">
+        <i class="fa fa-arrow-left"></i>
+    </section>
+</nav>
+<ul class="tf-tabs">
+    <li ng-class="{active: activeTab==0}" ng-click="activeTab=0"> <i class="fa fa-eye"></i> نمایش </li>
+    <li ng-class="{active: activeTab==1}" ng-click="activeTab=1"> <i class="fa fa-code"></i> توضیحات </li>
+</ul>
+<div class="tf-container horizontal-padding vertical-padding" ng-show="activeTab==0">
+    <p>
+        توجه داشته باشید که با کلیک روی گزینه‌های زیر، از این صفحه به جای دیگری هدایت می‌شوید!
+    </p>
+    <div>
+        <button class="btn btn-primary" tf-go="back"> برو به صفحه قبل! </button>
+        <button class="btn btn-primary" tf-go="/navbar"> برو به صفحه نوار پیمایش </button>
+    </div>
+</div>
+<div class="tf-container horizontal-padding vertical-padding" ng-show="activeTab==1">
+    <p>
+        قابلیت‌ها:
+    </p>
+    <ul>
+        <li> قابلیت برگشت به صفحه قبل. </li>
+    </ul>
+    <p>
+        این اتریبیوت، برای هدایت به صفحه‌های دیگر استفاده می‌شود. مقدار آن می‌تواند آدرس صفحه دیگر و یا مقدار back باشد.
+    </p>
+    <pre>
+//html
+&lt;button tf-go=&quot;back&quot;&gt;
+    Back
+&lt;/button&gt;
+&lt;button tf-go=&quot;/navbar&quot;&gt;
+    Navbar
+&lt;/button&gt;
+    </pre>
+</div>

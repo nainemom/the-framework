@@ -1,0 +1,75 @@
+<nav class="tf-navbar">
+    <section class="icon">
+        <i class="fa" ng-class="currentItem().icon"></i>
+    </section>
+    <section class="title">
+        <h4 ng-bind="currentItem().alias"></h4>
+    </section>
+    <section class="icon button" tf-go="back">
+        <i class="fa fa-arrow-left"></i>
+    </section>
+</nav>
+<ul class="tf-tabs">
+    <li ng-class="{active: activeTab==0}" ng-click="activeTab=0"> <i class="fa fa-eye"></i> نمایش </li>
+    <li ng-class="{active: activeTab==1}" ng-click="activeTab=1"> <i class="fa fa-code"></i> توضیحات </li>
+</ul>
+<div class="tf-container horizontal-padding vertical-padding" ng-show="activeTab==0">
+    <div>
+        <button class="btn btn-primary" ng-click="search()"> تست </button>
+    </div>
+    <br/>
+    <ul class="list-group">
+        <li class="list-group-item ltr text-left" ng-repeat="item in result" ng-click="toast(item.description)">
+
+            <h5> <img ng-src="{{item.owner.avatar_url + '&s=18'}}" class="middle" width="18px" height="18px"/> <b class="middle">{{item.name}}</b> <span class="badge badge-info pull-right"> <i class="fa fa-star"></i> {{item.stargazers_count}} </span> </h5>
+            <p>{{item.description}}</p>
+
+        </li>
+    </ul>
+</div>
+<div class="tf-container horizontal-padding vertical-padding" ng-show="activeTab==1">
+    <p>
+        قابلیت‌ها:
+    </p>
+    <ul>
+        <li> ارسال فایل. </li>
+        <li> ارسال محتوا بوسیله FormData. </li>
+        <li> مقداردهی content-type به صورت اتوماتیک. </li>
+    </ul>
+    <p>
+        برای استفاده از امکانات این پرووایدر، باید tfHttp را به کنترلر مورد نظر پاس دهید. متود‌های قابل استفاده عبارت‌اند از:
+    </p>
+    <ul>
+        <li>
+            <div class="ltr">get(url, [data])</div> ارسال به وسیله متود get (پارامتر اول آدرس صفحه و پارامتر دوم دیتای ارسالی)</li>
+        <li>
+            <div class="ltr">post(url, [data]) ارسال به وسیله متود post (پارامتر اول آدرس صفحه و پارامتر دوم دیتای ارسالی)</li>
+        <li> serialize(obj): برای تبدیل یک آبجکت به querystring</li>
+    </ul>
+    <p>
+        مقادیری که در فانکشن config قابل مقداردهی هستند، عبارت‌اند از:
+    </p>
+    <ul>
+        <li> address: اگر آدرس سرور شما در تمام ارسال‌ها یکی است، می‌توانید این پارامتر را مقداردهی کرده و دیگر در ارسال‌ها مقدار url را ذکر نکنید.</li>
+        <li> sid: مخفف session id بوده و اگر مقداردهی شود، پارامتر _sid به همراه تمام ارسال‌ها فرستاده می‌شود. مناسب برای اپلیکیشن‌های cordova که در آنها cookie وجود ندارد!</li>
+    </ul>
+    <p>
+        بعد از ارسال، پاسخ دریافتی از سرور به متود then و در صورت بروز اشکال، مقدار error به متود catch ارسال می‌شود.
+    </p>
+    <pre>
+//js
+function Controller($tfHttp){
+    var data = {
+        sort: 'stars',
+        order: 'desc',
+        q: 'angular',
+    } // example data
+    var url = &quot;https://api.github.com/search/repositories&quot;; // example url
+    $tfHttp.get(url, data).then(function(response) {
+        // success
+    }).catch(function(error){
+        // error
+    });
+}
+    </pre>
+    </div>

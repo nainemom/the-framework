@@ -1,0 +1,49 @@
+<nav class="tf-navbar">
+    <section class="icon">
+        <i class="fa" ng-class="currentItem().icon"></i>
+    </section>
+    <section class="title">
+        <h4 ng-bind="currentItem().alias"></h4>
+    </section>
+    <section class="icon button" tf-go="back">
+        <i class="fa fa-arrow-left"></i>
+    </section>
+</nav>
+<ul class="tf-tabs">
+    <li ng-class="{active: activeTab==0}" ng-click="activeTab=0"> <i class="fa fa-eye"></i> نمایش </li>
+    <li ng-class="{active: activeTab==1}" ng-click="activeTab=1"> <i class="fa fa-code"></i> توضیحات </li>
+</ul>
+<div class="tf-container horizontal-padding vertical-padding" ng-show="activeTab==0" style="min-height: 100%">
+    <div class="row">
+        <div class="form-group col-sm-6 col-xs-12">
+            <label class="control-label">مثال</label>
+            <tf-switch class="form-control"></tf-switch>
+        </div>
+    </div>
+
+
+</div>
+
+<div class="tf-container horizontal-padding vertical-padding" ng-show="activeTab==1">
+    <p>
+        قابلیت‌ها:
+    </p>
+    <ul>
+        <li> دریافت فوکوس </li>
+        <li> هماهنگی با کلاس form-control </li>
+    </ul>
+    <p>
+        اتریبیوت‌های ng-model و ng-change هم همانطور که از نامشان پیداست، برای دریافت مدل و فانکشن هنگام تغییر استفاده می‌شود.
+    </p>
+    <pre>
+//html
+&lt;tf-switch class=&quot;form-control&quot; ng-model=&quot;switch&quot; ng-change=&quot;onChange&quot;&gt;
+&lt;/tf-switch&gt;
+
+//js
+switch = ''; /* switch value */
+onChange = function(){
+    alert('date changed!');
+}
+    </pre>
+</div>

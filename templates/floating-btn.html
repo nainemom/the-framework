@@ -1,0 +1,40 @@
+<nav class="tf-navbar">
+    <section class="icon">
+        <i class="fa" ng-class="currentItem().icon"></i>
+    </section>
+    <section class="title">
+        <h4 ng-bind="currentItem().alias"></h4>
+    </section>
+    <section class="icon button" tf-go="back">
+        <i class="fa fa-arrow-left"></i>
+    </section>
+</nav>
+<ul class="tf-tabs">
+    <li ng-class="{active: activeTab==0}" ng-click="activeTab=0"> <i class="fa fa-eye"></i> نمایش </li>
+    <li ng-class="{active: activeTab==1}" ng-click="activeTab=1"> <i class="fa fa-code"></i> توضیحات </li>
+</ul>
+<div class="tf-container horizontal-padding vertical-padding" ng-show="activeTab==0">
+    <p> نمونه را در پایین سمت راست صفحه مشاهده می‌کنید.</p>
+    <tf-floating-btn>
+        <i class="fa fa-plus"></i>
+    </tf-floating-btn>
+</div>
+
+<div class="tf-container horizontal-padding vertical-padding" ng-show="activeTab==1">
+    <p>
+        قابلیت‌ها:
+    </p>
+    <ul>
+        <li> امکان قراردادن متن و یا آیکن دل‌بخواه. </li>
+    </ul>
+    <p>
+        تنظیمات خاصی ندارد. از تگ مربوطه استفاده کنید و ایونت‌ها و آیکن و یا محتوای دل‌بخواه خود را داخل آن قرار دهید.
+    </p>
+    <pre>
+//html
+&lt;tf-floating-btn&gt;
+    &lt;i class=&quot;fa fa-plus&quot;&gt;
+    &lt;/i&gt;
+&lt;/tf-floating-btn&gt;
+    </pre>
+</div>
