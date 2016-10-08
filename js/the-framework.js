@@ -63,11 +63,11 @@ angular.module('theFramework', ['ngRoute', 'ngAnimate', 'ngTouch'])
         var self = this;
         self.address = '';
         self.sid = false;
-        self.serialize = function(obj, prefix) {
+        self.serialize = function(obj) {
             var str = [];
             for (var p in obj) {
                 if (obj.hasOwnProperty(p)) {
-                    var k = prefix ? prefix + "[" + p + "]" : p,
+                    var k = p,
                         v = obj[p];
                     str.push(typeof v == "object" ?
                         serialize(v, k) :
@@ -121,7 +121,7 @@ angular.module('theFramework', ['ngRoute', 'ngAnimate', 'ngTouch'])
                                 then: function(userFunc) {
                                     resolve = userFunc;
                                 },
-                                reject: function(userFunc) {
+                                catch: function(userFunc) {
                                     reject = userFunc;
                                 }
                             }

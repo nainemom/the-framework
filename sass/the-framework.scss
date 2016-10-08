@@ -451,9 +451,9 @@ hr {
     }
     &.ng-hide {
         transform: translate3d( #{-1 * $sidebar-width}, 0, 0);
-    }
-    &.right {
-        transform: translate3d( $sidebar-width, 0, 0);
+        &.right {
+            transform: translate3d( $sidebar-width, 0, 0);
+        }
     }
 }
 
