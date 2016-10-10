@@ -6,8 +6,11 @@
         <h4>دِ فریم‌ورک!</h4>
         <p> تلاشی برای هماهنگ کردن موبایل، دسکتاپ و وب </p>
     </section>
-    <section class="icon button" ng-click="searchbar =! searchbar">
+    <section class="icon button" ng-click="searchbar =! searchbar" ng-show="!searched">
         <i class="fa fa-search"></i>
+    </section>
+    <section class="icon button" ng-click="reset()" ng-show="searched">
+        <i class="fa fa-search-minus"></i>
     </section>
 </nav>
 <tf-searchbar open="searchbar" search="search($text)" placeholder="بخشی از نام آیتم مورد نظر را وارد کنید..."></tf-searchbar>

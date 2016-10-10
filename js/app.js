@@ -100,8 +100,25 @@ angular.module('app', ['theFramework'])
             return pageIndex === -1 ? {} : $rootScope.items[pageIndex];
         }
     })
-    .controller('Main', function($scope, $location) {
-
+    .controller('Main', function($scope, $rootScope) {
+        $scope.items = $rootScope.items;
+        $scope.searched = false;
+        $scope.search = function(text) {
+            var ret = [];
+            var t;
+            for (var i = 0; i < $rootScope.items.length; i++) {
+                t = $rootScope.items[i];
+                if (t.alias.indexOf(text) !== -1 || t.id.indexOf(text) !== -1) {
+                    ret.push(t);
+                }
+            }
+            $scope.items = ret;
+            $scope.searched = true;
+        }
+        $scope.reset = function() {
+            $scope.items = $rootScope.items;
+            $scope.searched = false;
+        }
     })
     .controller('ImageSlider', function($scope) {
         $scope.images = [{
