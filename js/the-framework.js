@@ -267,13 +267,19 @@ angular.module('theFramework', ['ngRoute', 'ngAnimate', 'ngTouch'])
                             scope.$apply(scrollTop);
                             topFired = true;
                         }
-                    } else if (raw.scrollTop >= (raw.scrollHeight - raw.offsetHeight) - offset) {
+                    } else {
+                        topFired = false;
+                    }
+
+                    if (raw.scrollTop >= (raw.scrollHeight - raw.offsetHeight) - offset) {
                         if (lastDirection == 'up') {
                             bottomFired = false;
                         } else if (!bottomFired) {
                             scope.$apply(scrollBottom);
                             bottomFired = true;
                         }
+                    } else {
+                        bottomFired = false;
                     }
                     lastScrollPos = raw.scrollTop;
                 });
