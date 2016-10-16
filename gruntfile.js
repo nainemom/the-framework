@@ -22,7 +22,7 @@ module.exports = function(grunt) {
             }
         },
         concat: {
-            build: {
+            buildjs: {
                 src: [
                     "node_modules/fastclick/lib/fastclick.js",
                     "node_modules/browser-jquery/dist/jquery.min.js",
@@ -34,10 +34,18 @@ module.exports = function(grunt) {
                     "node_modules/angular-route/angular-route.js",
                     "node_modules/angular-animate/angular-animate.js",
                     "node_modules/angular-touch/angular-touch.js",
+                    "node_modules/angular-carousel/dist/angular-carousel.min.js",
 
                     "js/the-framework.js"
                 ],
                 dest: 'dist/the-framework.bundle.js',
+            },
+            buildcss: {
+                src: [
+                    "dist/the-framework.bundle.css",
+                    "node_modules/angular-carousel/dist/angular-carousel.min.css",
+                ],
+                dest: 'dist/the-framework.bundle.css',
             },
         },
         uglify: {
@@ -64,9 +72,9 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-exec');
 
-    grunt.registerTask('buildcss', ['sass:build', 'cssmin']);
-    grunt.registerTask('buildjs', ['concat:build', 'uglify:build']);
+    grunt.registerTask('buildcss', ['sass:build', 'cssmin', 'concat:buildcss']);
+    grunt.registerTask('buildjs', ['concat:buildjs', 'uglify:build']);
     grunt.registerTask('build', ['buildcss', 'buildjs']);
-    grunt.registerTask('fastbuild', ['sass:build', 'concat:build']);
+    grunt.registerTask('fastbuild', ['sass:build', 'concat:buildcss', 'concat:buildjs']);
     grunt.registerTask('start', ['fastbuild', 'exec:start']);
 };
