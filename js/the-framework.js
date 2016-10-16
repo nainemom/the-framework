@@ -1,5 +1,5 @@
 var log = alert;
-angular.module('theFramework', ['ngRoute', 'ngAnimate', 'ngTouch'])
+angular.module('theFramework', ['ngRoute', 'ngAnimate', 'ngTouch', 'angular-carousel'])
     .run(function($rootScope) {
         FastClick.attach(document.body);
     })
@@ -347,80 +347,40 @@ angular.module('theFramework', ['ngRoute', 'ngAnimate', 'ngTouch'])
                 '</div>'
         };
     })
-    .directive('tfImageSlider', function($interval) {
+    .directive('tfImageSlider', function($compile) {
 
         return {
-            restrict: 'E',
+            restrict: 'EA',
+            replace: true,
             scope: {
-                ngModel: '=?'
+                ngModel: '=?',
+                index: '=?'
+                    //height: '@?'
             },
-            link: function(scope, attrs) {
+            link: function(scope, element, attrs) {
                 scope.images = scope.ngModel || [];
-                scope.setTime = attrs.attr('interval') || 7000;
-
-                scope.numberOfImages = scope.images.length;
-                scope.dots = new Array(scope.numberOfImages);
-                scope.selectedImage = 0;
-                scope.setSelected = function(idx) {
-                    scope.stopSlider();
-                    scope.selectedImage = idx;
-                };
-
-                //Slideshow controls
-                scope.sliderBack = function() {
-                    scope.stopSlider();
-                    scope.selectedImage === 0 ? scope.selectedImage = scope.numberOfImages - 1 : scope.selectedImage--;
-                };
-
-                scope.sliderForward = function() {
-                    scope.stopSlider();
-                    scope.autoSlider();
-                };
-
-                scope.autoSlider = function() {
-                    scope.selectedImage < scope.numberOfImages - 1 ? scope.selectedImage++ : scope.selectedImage = 0;
-                };
-
-                scope.stopSlider = function() {
-                    $interval.cancel(scope.intervalPromise);
-                    scope.activePause = true;
-                    scope.activeStart = false;
-                };
-
-                scope.toggleStartStop = function() {
-                    if (scope.activeStart) {
-                        scope.stopSlider();
-                    } else {
-                        scope.startSlider();
-                    }
-                };
-
-                scope.startSlider = function() {
-                    scope.intervalPromise = $interval(scope.autoSlider, scope.setTime);
-                    scope.activeStart = true;
-                    scope.activePause = false;
-                };
-                scope.startSlider();
-
-                scope.show = function(idx) {
-                    if (scope.selectedImage == idx) {
-                        return true;
-                    }
-                    return false;
-                };
-
+                scope.index = scope.index || 0;
+                scope.height = attrs.height || 300;
+                scope.height += 'px';
                 scope.oldClasses = attrs.class || '';
-            },
-            template: '<div class="tf-image-slider {{oldClasses}}" interval="{{setTime}}">' +
-                '<ul>' +
-                '   <li ng-repeat="image in images" ng-click="toggleStartStop()" ng-swipe-right="sliderBack()" ng-swipe-left="sliderForward()"><img data-ng-src="{{image.src}}" data-ng-alt="{{image.alt}}" ng-show="show($index)"/></li>' +
-                '</ul>' +
-                '<div class="tf-image-slider-pagination">' +
-                '<ul>' +
-                '   <li ng-repeat="i in dots track by $index" ng-class="{current: selectedImage==$index}" ng-click="setSelected($index)"></li>' +
-                '</ul>' +
-                '</div>' +
-                '</div>'
+
+                //
+                element.replaceWith(
+                    $compile(
+                        '<div class="tf-image-slider {{oldClasses}}">' +
+                        '<ul rn-carousel rn-carousel-controls rn-carousel-index="index" rn-carousel-pause-on-hover rn-carousel-buffered ng-style="{height: height}">' +
+                        '<li ng-repeat="slide in images">' +
+                        '   <div ng-style="{\'background-image\': \'url(\' + slide.src + \')\', height: height}"  class="bgimage">' +
+                        '   </div>' +
+                        '</li>' +
+                        '</ul>' +
+                        '<ul class="tf-image-slider-pagination">' +
+                        '<li ng-repeat="slide in images" ng-class="{current: $index == index}"></li>' +
+                        '</ul>' +
+                        '</div>'
+                    )(scope)
+                );
+            }
         };
     })
     .directive('tfSelectize', function($timeout) {

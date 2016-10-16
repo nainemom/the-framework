@@ -1,62 +1,40 @@
 .tf-image-slider {
-    background-color: $gray-dark;
     position: relative;
-    padding: 0;
+    padding: 0 !important;
+    background-color: $text-color;
     margin: 0;
     z-index: 22;
     direction: ltr;
-    & ul {
-        height: 100%;
-        margin: 0;
-        padding: 0
-    }
-    & li {
-        height: 100%;
-        margin: 0;
-        position: relative;
-        list-style: none;
-        width: 100%
-    }
-    & li img {
-        border: none;
-        margin: 0;
-        //display: none;
-        opacity: 1;
+    & li .bgimage {
         width: 100%;
-        height: auto;
-        position: relative;
-        -webkit-transition: opacity $animation-speed-normal ease 0s;
-        transition: opacity $animation-speed-normal ease 0s;
-        &.ng-hide {
-            width: 0;
-            height: 0;
-            opacity: 0;
-            position: absolute;
-        }
-    }
-    & li img.show {
-        opacity: 1;
-        display: block;
+        background-position: center;
+        background-size: cover;
     }
     .tf-image-slider-pagination {
         left: 0;
         bottom: $vertical-padding;
         width: 100%;
         text-align: center;
-        height: 12px;
+        height: 8px;
         position: absolute;
         & li {
-            background: rgba($theme-color, 0.3);
-            border-radius: 12px;
+            background: rgba($theme-color, 0.4);
+            border-radius: 4px;
             display: inline-block;
-            height: 12px;
-            width: 12px;
-            margin: 0 5px;
+            height: 8px;
+            width: 8px;
+            margin: 0 3px;
             position: relative;
             cursor: pointer;
+            transition-duration: $animation-speed-fast;
             &.current {
                 background: $theme-color;
+                width: 15px;
             }
         }
+    }
+    & .rn-carousel-control {
+        color: $theme-color;
+        font-size: 23px;
     }
 }
