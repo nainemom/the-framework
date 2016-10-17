@@ -22,6 +22,7 @@
         overflow: hidden;
         margin: 0 auto;
         z-index: 39999;
+        box-shadow: $long-shadow;
         &.ng-hide {
             opacity: 0;
         }
