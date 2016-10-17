@@ -15,11 +15,17 @@
 </ul>
 <div class="tf-container horizontal-padding vertical-padding" ng-show="activeTab==0" style="min-height: 100%">
     <div class="row">
-        <div class="form-group col-sm-6 col-xs-12">
-            <label class="control-label">مثال</label>
-            <tf-switch class="form-control"></tf-switch>
+        <div class="form-group col-xs-6">
+            <label class="control-label">مثال در فرم</label>
+            <div class="checkbox">
+                <tf-switch></tf-switch>
+            </div>
         </div>
     </div>
+    <p>
+        و یا مثال inline که در اینجا
+        <tf-switch ng-model="model.two" on-value="1"></tf-switch> مشاهده می‌کنید. مقدار این دستگیره الآن {{model.two}} است.
+    </p>
 
 
 </div>
@@ -30,20 +36,24 @@
     </p>
     <ul>
         <li> دریافت فوکوس </li>
-        <li> هماهنگی با کلاس form-control </li>
+        <li> هماهنگی با فرم </li>
+        <li> تنظیم مقادیر خاص </li>
     </ul>
     <p>
-        اتریبیوت‌های ng-model و ng-change هم همانطور که از نامشان پیداست، برای دریافت مدل و فانکشن هنگام تغییر استفاده می‌شود.
+        اتریبیوت ng-model همانطور که از نامش پیداست، برای دریافت مدل استفاده می‌شود. مقادیری که در اتریبیوت‌های دل‌بخواهی on-value و off-value وارد می‌شود، برای مقدار مدل، هنگام انتخاب‌شده و بالعکس استفاده می‌شود. در صورتی که این دو اتریبیوت مقداردهی نشوند، true
+        و false در نظر گرفته می‌شود.
+    </p>
+    <p>
+        همچنین در نظر داشته باشید که اگر مقدار ngModel در ابتدای کار مقداری خارج از onValue یا offValue باشد، مقدار offValue به طور پیش‌فرض برای آن در نظر گرفته می‌شود.
     </p>
     <pre>
 //html
-&lt;tf-switch class=&quot;form-control&quot; ng-model=&quot;switch&quot; ng-change=&quot;onChange&quot;&gt;
+&lt;tf-switch ng-model=&quot;switch&quot; on-value=&quot;{‌{onValue}‌}&quot; off-value=&quot;{‌{offValue}‌}&quot;&gt;
 &lt;/tf-switch&gt;
 
 //js
+onValue = 'it is true!';
+offValue = 'false :(';
 switch = ''; /* switch value */
-onChange = function(){
-    alert('date changed!');
-}
     </pre>
 </div>

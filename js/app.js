@@ -173,7 +173,10 @@ angular.module('app', ['theFramework'])
         });
     })
     .controller('Switch', function($scope, $timeout) {
-        $scope.scrollDir = '';
+        $scope.model = {
+            one: false,
+            two: true
+        }
     })
     .controller('Toast', function($scope, $theFramework) {
         $scope.toast = $theFramework.toast;

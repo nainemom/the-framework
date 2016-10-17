@@ -617,47 +617,55 @@ angular.module('theFramework', ['ngRoute', 'ngAnimate', 'ngTouch', 'angular-caro
             replace: true,
             scope: {
                 'ngModel': '=?',
+                'onValue': '=?',
+                'offValue': '=?',
                 'ngChange': '&?'
             },
             link: function(scope, element, attrs) {
-                scope.ngModel = typeof attrs.ngModel != 'undefined' && typeof scope.ngModel != 'undefined' ? scope.ngModel : false;
+                //scope.ngModel = typeof attrs.ngModel != 'undefined' && typeof scope.ngModel != 'undefined' ? scope.ngModel : false;
+                scope.onValue = typeof scope.onValue != 'undefined' ? scope.onValue : true;
+                scope.offValue = typeof scope.offValue != 'undefined' ? scope.offValue : false;
+                //scope.offValue = scope.offValue || false;
                 scope.focus = false;
+                scope.state = function() {
+                    return scope.ngModel === scope.onValue ? true : false;
+                }
+                scope.toggle = function(val) {
+                    scope.focus = true;
+                    if (typeof val == 'undefined') {
+                        scope.ngModel = scope.state() ? scope.offValue : scope.onValue;
+                    } else if (val == null) { // set at start
+                        console.log('start calling')
+                        scope.ngModel = scope.state() ? scope.onValue : scope.offValue;
+                        console.log(scope.ngModel)
+                    } else if (val) {
+                        scope.ngModel = scope.onValue;
+                    } else {
+                        scope.ngModel = scope.offValue;
+                    }
+                }
+                scope.toggle(null);
 
-                function bindKeyboard(event) {
+
+                element.bind('keydown', function(event) {
                     if ([32, 37, 39].indexOf(event.keyCode) !== -1) {
                         scope.$apply(function() {
                             if (event.keyCode == 32) { // space
-                                scope.ngModel = !scope.ngModel;
+                                scope.toggle();
                             } else if (event.keyCode == 37) { // left
-                                scope.ngModel = true;
+                                scope.toggle(true);
                             } else if (event.keyCode == 39) { // right
-                                scope.ngModel = false;
+                                scope.toggle(false);
                             }
                         });
                         return false;
                     }
-                }
-                scope.$watch('focus', function(val) {
-                    if (val) {
-                        $document.bind('keydown', bindKeyboard);
-                    } else {
-                        $document.off('keydown', bindKeyboard);
-                    }
                 });
             },
-            template: function(element, attrs) {
-                var html = '';
-                html += '<span tabindex="0" ng-focus="focus=true" ng-blur="focus=false" class="tf-switch' + (attrs.class ? ' ' + attrs.class : '') + '"';
-                html += ' ng-click="focus=true; ' + attrs.disabled + ' ? ngModel : ngModel=!ngModel;ngChange();"';
-                html += ' ng-class="{ checked: ngModel, disabled: ' + attrs.disabled + ', focus: focus }"';
-                html += '>';
-                html += '<span class="switch-text">'; /*adding new container for switch text*/
-                html += '{{ngModel? "بله": "خیر"}}';
-                html += '</span>';
-                html += '<span class="switch-lever"></span>';
-                html += '</span>';
-                return html;
-            }
+            template: '' +
+                '<span tabindex="0" ng-focus="focus=true" ng-blur="focus=false" class="tf-switch" ng-click="toggle();" ng-class="{ checked: state(), focus: focus }">' +
+                '   <span class="switch-lever"></span>' +
+                '</span>'
         }
     })
     .directive('tfDatepicker', function($timeout, $document, $compile, $window, $interval) {
