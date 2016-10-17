@@ -14,28 +14,27 @@
     <li ng-class="{active: activeTab==1}" ng-click="activeTab=1"> <i class="fa fa-code"></i> توضیحات </li>
 </ul>
 <div class="tf-container horizontal-padding vertical-padding" ng-show="activeTab==0" style="min-height: 100%">
-    <div>
-        <div class="row">
-            <div class="form-group col-sm-6 col-xs-12">
-                <label class="control-label">انتخاب یک گزینه</label>
-                <tf-selectize class="form-control" options="options" ng-model="inputs.one"></tf-selectize>
-            </div>
-            <div class="form-group col-sm-6 col-xs-12">
-                <label class="control-label">انتخاب چند گزینه</label>
-                <tf-selectize class="form-control" multiple options="options" ng-model="inputs.two"></tf-selectize>
-            </div>
-            <div class="form-group col-sm-6 col-xs-12">
-                <label class="control-label">با قابلیت اضافه کردن</label>
-                <tf-selectize class="form-control" allow-create options="options" ng-model="inputs.three"></tf-selectize>
-            </div>
-            <div class="form-group col-sm-6 col-xs-12">
-                <label class="control-label">بدون قابلیت جست‌وجو</label>
-                <tf-selectize class="form-control disable-search" allow-create options="options" ng-model="inputs.three"></tf-selectize>
-            </div>
+    <div class="row">
+        <div class="form-group col-sm-6 col-xs-12">
+            <label class="control-label">انتخاب یکی</label>
+            <tf-select class="form-control" ng-model="inputs.model[0]" options="options"></tf-select>
+        </div>
+        <div class="form-group col-sm-6 col-xs-12">
+            <label class="control-label">انتخاب چندتا</label>
+            <tf-select class="form-control" ng-model="inputs.model[1]" options="options" multiple></tf-select>
+        </div>
+    </div>
+    <div class="row">
+        <div class="form-group col-sm-6 col-xs-12">
+            <label class="control-label">با قابلیت اضافه‌کردن </label>
+            <tf-select class="form-control" ng-model="inputs.model[2]" options="options" allow-create></tf-select>
+        </div>
+        <div class="form-group col-sm-6 col-xs-12">
+            <label class="control-label">با قابلیت اضافه‌کردن چندتایی</label>
+            <tf-select class="form-control" ng-model="inputs.model[3]" options="options" multiple allow-create></tf-select>
         </div>
     </div>
 </div>
-
 
 <div class="tf-container horizontal-padding vertical-padding" ng-show="activeTab==1">
     <p>
@@ -44,21 +43,21 @@
     <ul>
         <li> هماهنگی با فرم‌های bootstrap با استفاده از کلاس form-control </li>
         <li> امکان انتخاب یک یا چند گزینه توسط کاربر. </li>
-        <li> امکان غیرفعال کردن جست‌وجو. </li>
+        <li> امکان حذف گزینه توسط کاربر. </li>
         <li> امکان اضافه کردن گزینه توسط کاربر. </li>
     </ul>
     <p>
-        این دایرکتیو از پلاگین selectize جی‌کوئری برگردانده شده است. در نتیجه تمام قابلیت‌هاش در اینجا نیز قابل استفاده است.
+        در نسخه قبلی، دایرکتیوی تحت پلاگین selectize در jquery نوشته شده بود. در این نسخه، این دایرکتیو تماما توسط angularjs و بدون وابستگی دیگر ایجاد شده است.
     </p>
     <p>
-        برای انتخاب چند گزینه از اتریبیوت multiple، برای غیرفعال کردن جست‌وجو از کلاس disable-search و برای امکان اضافه‌کردن آیتم توسط کاربر از اتریبیوت allow-create استفاده کنید. همچنین گزینه‌های از پیش تعیین شده، در قالب آرایه در جاوااسکریپت مقدار گرفته و به
-        اتریبیوت options پاس داده می‌شوند. اتریبیوت ng-model هم به عنوان مدل این المنت استفاده می‌شود.
+        برای انتخاب چند گزینه از اتریبیوت multiple و برای امکان اضافه‌کردن آیتم توسط کاربر از اتریبیوت allow-create استفاده کنید. همچنین گزینه‌های از پیش تعیین شده، در قالب آرایه در جاوااسکریپت مقدار گرفته و به اتریبیوت options پاس داده می‌شوند. اتریبیوت ng-model
+        هم به عنوان مدل این المنت استفاده می‌شود.
     </p>
 
     <pre>
 //html
-&lt;tf-selectize class=&quot;form-control&quot; allow-create multiple options=&quot;options&quot; ng-model=&quot;input&quot;&gt;
-&lt;/tf-selectize&gt;
+&lt;tf-select class=&quot;form-control&quot; allow-create multiple options=&quot;options&quot; ng-model=&quot;input&quot;&gt;
+&lt;/tf-select&gt;
 
 //js
 options = [
@@ -66,6 +65,6 @@ options = [
     { text: 'Option Two', value: 2},
     { text: 'Option Tree', value: 3}
 ];
-input = ''; /* picked item value by user */
+input = []; /* picked item value by user */
     </pre>
 </div>

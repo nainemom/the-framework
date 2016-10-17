@@ -33,7 +33,7 @@ var pages = [{
     id: 'datepicker',
     controller: 'Datepicker'
 }, {
-    alias: 'انتخاب آیتم از لیست (Dropdown)',
+    alias: 'منوی کشویی (Dropdown)',
     icon: 'fa-caret-down',
     id: 'dropdown',
     controller: 'Dropdown'
@@ -159,15 +159,8 @@ angular.module('app', ['theFramework'])
     .controller('Datepicker', function($scope) {
 
     })
-    .controller('Dropdown', function($scope) {
-        $scope.options = [
-            { text: '1 - ایکس شماره یک', value: 1 },
-            { text: '2 - ایکس شماره دو', value: 2 },
-            { text: '3 - ایکس شماره سه', value: 3 }
-        ];
-        $scope.inputs = {};
-    })
-    .controller('Conduction', function($scope) {
+
+.controller('Conduction', function($scope) {
 
     })
     .controller('Scroll', function($scope, $timeout) {
@@ -209,6 +202,28 @@ angular.module('app', ['theFramework'])
                 $theFramework.toast(totalLen + ' ریپازیتوری پیدا شد!');
             })
         }
+    })
+    .controller('Dropdown', function($scope) {
+        $scope.options = [
+            { text: 'ایران', value: 1 },
+            { text: 'ایتالیا', value: 2 },
+            { text: 'آلمان', value: 3 },
+            { text: 'هلند', value: 4 },
+            { text: 'آرژانتین', value: 5 },
+            { text: 'برزیل', value: 6 },
+            { text: 'کروواسی', value: 7 },
+            { text: 'کره', value: 8 },
+            { text: 'فرانسه', value: 9 },
+            { text: 'پرتغال', value: 10 },
+            { text: 'ترکیه', value: 11 },
+            { text: 'بلژیک', value: 12 },
+            { text: 'شیلی', value: 13 }
+        ];
+
+        $scope.inputs = {};
+        $scope.inputs.model = [
+            '', [], '', []
+        ]
     })
     .controller('Movies', function($scope, $theFramework, $http, $timeout, $tfHttp) {
         $scope.searchbar = false;

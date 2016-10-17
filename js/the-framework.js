@@ -1,4 +1,6 @@
 var log = alert;
+var isCordova = typeof window.cordova == 'undefined' ? false : true;
+
 angular.module('theFramework', ['ngRoute', 'ngAnimate', 'ngTouch', 'angular-carousel'])
     .run(function($rootScope) {
         FastClick.attach(document.body);
@@ -182,10 +184,6 @@ angular.module('theFramework', ['ngRoute', 'ngAnimate', 'ngTouch', 'angular-caro
                 element.replaceWith(
                     $compile('<ng-view class="tf-view tf-view-{{animation}}" onload="onload()"></ng-view>')(scope)
                 );
-                tfc = jQuery('.tf-container');
-                jQuery('.tf-container').scroll(function() {
-                    console.log(tfc[0].scrollTop);
-                });
             }
         }
     })
@@ -383,169 +381,234 @@ angular.module('theFramework', ['ngRoute', 'ngAnimate', 'ngTouch', 'angular-caro
             }
         };
     })
-    .directive('tfSelectize', function($timeout) {
+    .directive('tfSelect', function($compile, $timeout) {
         return {
-            restrict: 'EA',
-            require: 'ngModel',
+            restrict: 'E',
+            replace: true,
+            transclude: false,
             scope: {
-                selectize: '&',
-                options: '&',
-                ngDisabled: '=',
-                allowCreate: '='
+                options: '=',
+                ngModel: '='
             },
-            link: function(scope, element, attrs, ngModel) {
-                var changing, options, selectize, invalidValues = [];
-                var data = scope.options();
-                var settings = typeof attrs.selectize != 'undefined' ? scope.selectize() : {};
+            link: function(scope, element, attrs) {
+                //console.log('logging opts');
+                //console.log(scope.options());
+                var inp = element.find('input')[0];
+                scope.open = false;
+                scope.displayOptions = [];
 
-                var mode = element[0].hasAttribute('multiple') ? 'multi' : 'single';
-                // Default options
-                options = angular.extend({
-                    delimiter: ',',
-                    persist: true,
-                    mode: mode,
-                    create: ((typeof attrs.allowCreate !== 'undefined' && attrs.allowCreate !== false) ? function(input) {
-                        return {
-                            value: input,
-                            text: input
+                scope.multiple = typeof attrs.multiple != 'undefined' ? true : false;
+                scope.allowCreate = typeof attrs.allowCreate != 'undefined' ? true : false;
+
+                scope.searchText = '';
+
+                scope.focusIndex = 0;
+
+
+                scope.search = function(text) {
+                    scope.searchText = text;
+                    scope.displayOptions = [];
+                    if (text == '') {
+                        for (var i = 0; i < scope.options.length; i++) {
+                            scope.displayOptions.push(
+                                Object.assign(scope.options[i], { action: 'select' })
+                            );
                         }
-                    } : false),
-                    closeAfterSelect: mode == 'single' ? true : false,
-                    placeholder: 'انتخاب کنید',
-                    render: {
-                        option_create: function(data, escape) {
-                            return '<div class="create">اضافه کردن <strong>' + escape(data.input) + '</strong>&hellip;</div>';
+                    } else {
+                        var dublicate = false;
+                        for (var i = 0; i < scope.options.length; i++) {
+                            if (text == '' || scope.options[i].text.indexOf(text) !== -1) {
+                                scope.displayOptions.push(
+                                    Object.assign(scope.options[i], { action: 'select' })
+                                );
+                            }
+                            if (text == scope.options[i].value) {
+                                dublicate = true;
+                            }
                         }
-                    }
-                }, settings || {});
 
-                // Activate the widget
-                selectize = element.selectize(options)[0].selectize;
-
-                selectize.on('change', function() {
-                    //console.log('selectize changed ');
-                    setModelValue(selectize.getValue());
-
-                });
-
-                function setModelValue(value) {
-                    //console.log('set model value ' + value);
-                    value = value && value !== '' ? value : undefined;
-                    if (changing) {
-                        return;
-                    }
-                    scope.$parent.$apply(function() {
-                        ngModel.$setViewValue(value);
-                    });
-
-                    if (options.mode === 'single') {
-                        selectize.blur();
-                    }
-                }
-
-                // Normalize the model value to an array
-                function parseValues(value) {
-                    if (angular.isArray(value)) {
-                        return value;
-                    }
-                    if (!value) {
-                        return [];
-                    }
-                    return String(value).split(options.delimiter);
-                }
-
-                // Non-strict indexOf
-                function indexOfLike(arr, val) {
-                    for (var i = 0; i < arr.length; i++) {
-                        if (arr[i] === val) {
-                            return i;
+                        if (text != '' && scope.allowCreate && !dublicate) {
+                            scope.displayOptions.push({
+                                value: text,
+                                text: 'اضافه کردن "' + text + '"',
+                                action: 'create'
+                            })
+                        }
+                        if (scope.displayOptions.length == 0) {
+                            scope.displayOptions.push({
+                                value: '',
+                                text: 'هیچ گزینه‌ای موجود نیست!',
+                                action: 'none'
+                            })
                         }
                     }
-                    return -1;
+
+                    scope.focusIndex = 0;
                 }
 
-                // Boolean wrapper to indexOfLike
-                function contains(arr, val) {
-                    return indexOfLike(arr, val) !== -1;
-                }
 
-                // Store invalid items for late-loading options
-                function storeInvalidValues(values, resultValues) {
-                    values.map(function(val) {
-                        if (!(contains(resultValues, val) || contains(invalidValues, val))) {
-                            invalidValues.push(val);
-                        }
-                    });
-                }
 
-                function restoreInvalidValues(newOptions, values) {
-                    var i, index;
-                    for (i = 0; i < newOptions.length; i++) {
-                        index = indexOfLike(invalidValues, newOptions[i][selectize.settings.valueField]);
-                        if (index !== -1) {
-                            values.push(newOptions[i][selectize.settings.valueField]);
-                            invalidValues.splice(index, 1);
-                        }
-                    }
-                }
 
-                function setSelectizeValue(value) {
-                    //console.log('set selectize value ' + value)
+                scope.clickItem = function(index) {
                     $timeout(function() {
-                        var values = parseValues(value);
-
-                        if (changing || values === parseValues(selectize.getValue())) {
-                            return;
+                        scope.focusItem(index);
+                        var justSelect = function(item) {
+                            if (scope.multiple) {
+                                var _index = scope.ngModel.indexOf(item.value);
+                                if (_index === -1) {
+                                    scope.ngModel.push(item.value);
+                                } else {
+                                    scope.ngModel.splice(
+                                        _index, 1
+                                    );
+                                }
+                            } else {
+                                scope.open = false;
+                                scope.ngModel = item.value;
+                            }
                         }
-
-                        changing = false;
-
-                        selectize.setValue(values);
-                        storeInvalidValues(values, parseValues(selectize.getValue()));
-
-                        changing = true;
+                        var item = scope.displayOptions[scope.focusIndex];
+                        switch (item.action) {
+                            case 'select':
+                                justSelect(item);
+                                break;
+                            case 'create':
+                                scope.search('');
+                                var _item = {
+                                    text: item.value,
+                                    value: item.value
+                                }
+                                scope.options.push(_item);
+                                justSelect(_item);
+                                break;
+                            case 'none':
+                                scope.search('');
+                                scope.ngModel = scope.multiple ? [] : '';
+                        }
                     });
+                    return true;
+                }
+                scope.focusItem = function(index) {
+                    var len = scope.displayOptions.length;
+                    if (index >= len) {
+                        scope.focusIndex = 0;
+                    } else if (index < 0) {
+                        scope.focusIndex = len - 1;
+                    } else {
+                        scope.focusIndex = index;
+                    }
+                    inp.focus();
+                    return true;
                 }
 
-                function setSelectizeOptions(newOptions) {
-                    var values = parseValues(ngModel.$viewValue);
-
-                    if (options.mode === 'multi' && newOptions) {
-                        restoreInvalidValues(newOptions, values);
+                scope.itemClass = function(index) {
+                    if (index >= scope.displayOptions.length) {
+                        return false;
                     }
-
-                    if (newOptions) {
-                        if (Array.isArray(newOptions) && newOptions.length === 0) {
-                            selectize.clearOptions();
+                    var item = scope.displayOptions[index];
+                    var ret = '';
+                    if (item.action == 'select') {
+                        if (scope.multiple) {
+                            if (scope.ngModel.indexOf(item.value) !== -1) {
+                                ret = 'active ';
+                            }
+                        } else {
+                            if (scope.ngModel == item.value) {
+                                ret = 'active ';
+                            }
                         }
-                        selectize.addOption(newOptions);
-                        selectize.refreshOptions(false);
-                        setSelectizeValue(values);
                     }
-                }
-
-                var toggleDisabled = function(disabled) {
-                    if (disabled) {
-                        selectize.disable();
-                        return;
+                    if (scope.focusIndex == index) {
+                        ret += 'focus';
                     }
 
-                    selectize.enable();
-                };
-
-                scope.$watch('ngDisabled', toggleDisabled);
-                scope.$parent.$watch(attrs.ngModel, setSelectizeValue);
-
-                if (attrs.options) {
-                    scope.$parent.$watch(attrs.options, setSelectizeOptions, true);
+                    return ret;
                 }
+                angular.element(inp).bind('keydown', function(event) {
+                    if ([13, 27, 38, 40, 9].indexOf(event.keyCode) !== -1) {
+                        scope.$apply(function() {
+                            var len = scope.options.length;
+                            if (event.keyCode == 9 || event.keyCode == 27) { // tab. esc
+                                scope.open = false;
+                            } else if (event.keyCode == 13) { // enter
+                                scope.clickItem(scope.focusIndex);
+                            } else if (event.keyCode == 38) { // top
+                                scope.focusItem(scope.focusIndex - 1);
+                            } else if (event.keyCode == 40) { // down
+                                scope.focusItem(scope.focusIndex + 1);
+                            }
 
-                scope.$parent.$watch(data, setSelectizeOptions(data), true);
+                        });
+                        return false;
+                    }
+                })
 
-                scope.$on('$destroy', function() {
-                    selectize.destroy();
+                scope.$watch('open', function(newVal) {
+                    if (newVal) {
+                        $timeout(function() {
+                            scope.search('');
+                            inp.focus();
+                        }, 150);
+                    }
                 });
-            }
+
+
+                scope.displayVal = function() {
+                    var ret, i, j;
+                    if (scope.multiple) {
+                        ret = [];
+                        for (i = 0; i < scope.ngModel.length; i++) {
+                            for (j = 0; j < scope.options.length; j++) {
+                                if (scope.ngModel[i] == scope.options[j].value) {
+                                    ret.push(scope.options[j].text);
+                                }
+                            }
+                        }
+                    } else {
+                        ret = '';
+                        for (i = 0; i < scope.options.length; i++) {
+                            if (scope.options[i].value == scope.ngModel) {
+                                ret = scope.options[i].text;
+                                break;
+                            }
+                        }
+
+                    }
+                    return ret;
+                }
+
+                scope.globalClick = function(event) {
+                    var el = angular.element(event.target);
+                    if (el.hasClass('tf-select')) {
+                        scope.open = false;
+                    } else if (el.hasClass('tf-select-element') || el.hasClass('item')) {
+                        scope.open = true;
+                        inp.focus();
+                    }
+                }
+
+            },
+            template: '' +
+                '<div class="tf-select-element" ng-class="{focus: open}" ng-focus="open=true" tabindex="0" ng-click="globalClick($event)">' +
+                '   <div class="tf-select-element-inner">' +
+                '       <span class="item item-multiple" ng-if="multiple" ng-repeat="item in displayVal() track by $index" ng-bind="item"></span>' +
+                '       <span class="item item-single" ng-if="!multiple" ng-bind="displayVal()"></span>' +
+                '   </div>' +
+                '   <div class="tf-overlay" ng-show="open"></div>' +
+                '   <div class="tf-select" ng-show="open">' +
+                '       <div class="tf-select-inner" ng-show="open">' +
+                '           <nav class="tf-navbar">' +
+                '              <section class="title"><input ng-model="searchText" ng-change="search(searchText)" class="form-control" placeholder="نام گزینه مورد نظر را وارد کنید..."/></section>' +
+                '              <section class="icon button" ng-click="open = false"><i class="fa fa-check"></i></section>' +
+                '           </nav>' +
+                '           <div class="tf-container">' +
+                '               <ul class="list-group block">' +
+                '                   <li class="list-group-item" ng-repeat="item in displayOptions" ng-bind="item.text" ng-mouseover="focusItem($index)" ng-click="clickItem($index)" ng-class="itemClass($index)"></li>' +
+                '               </ul>' +
+                '           </div>' +
+                '       </div>' +
+                '   </div>' +
+                '</div>'
         };
     })
     .directive('tfSwitch', function($timeout, $document) {
@@ -772,7 +835,6 @@ angular.module('theFramework', ['ngRoute', 'ngAnimate', 'ngTouch', 'angular-caro
                 ngChange: '&?'
             },
             link: function(scope, element, attrs) {
-                var isCordova = typeof window.cordova == 'undefined' ? false : true;
                 scope.ngChange = typeof scope.ngChange != 'undefined' ? scope.ngChange : new Function();
                 scope.ngModel = typeof scope.ngModel != 'undefined' ? scope.ngModel : '';
 
