@@ -391,8 +391,6 @@ angular.module('theFramework', ['ngRoute', 'ngAnimate', 'ngTouch', 'angular-caro
                 ngModel: '='
             },
             link: function(scope, element, attrs) {
-                //console.log('logging opts');
-                //console.log(scope.options());
                 var inp = element.find('input')[0];
                 scope.open = false;
                 scope.displayOptions = [];
@@ -444,9 +442,6 @@ angular.module('theFramework', ['ngRoute', 'ngAnimate', 'ngTouch', 'angular-caro
 
                     scope.focusIndex = 0;
                 }
-
-
-
 
                 scope.clickItem = function(index) {
                     $timeout(function() {
@@ -669,7 +664,7 @@ angular.module('theFramework', ['ngRoute', 'ngAnimate', 'ngTouch', 'angular-caro
                 '</span>'
         }
     })
-    .directive('tfDatepicker', function($timeout, $document, $compile, $window, $interval) {
+    .directive('tfDatepickerOld', function($timeout, $document, $compile, $window, $interval) {
         return {
             restrict: 'EA',
             replace: true,
@@ -763,7 +758,6 @@ angular.module('theFramework', ['ngRoute', 'ngAnimate', 'ngTouch', 'angular-caro
                     scope.vDate.refresh();
 
                 }
-
                 scope.promise = {};
                 scope.mathMousedown = function(event, action, type, value, interval) {
                     scope.cancelPromise();
@@ -816,6 +810,180 @@ angular.module('theFramework', ['ngRoute', 'ngAnimate', 'ngTouch', 'angular-caro
                 return '<div class="' + (attrs.class ? ' ' + attrs.class : '') + '" ng-click="openPicker()" ng-focus="openPicker()" ng-bind="ngModel" ng-show="!open" tabindex="0"></div>';
             }
         }
+    })
+    .directive('tfDatepicker', function($timeout, $document, $compile, $window, $interval) {
+        return {
+            restrict: 'E',
+            replace: true,
+            transclude: false,
+            scope: {
+                calendar: '@?',
+                format: '@?',
+                ngModel: '=?'
+            },
+            link: function(scope, element, attrs) {
+                //var inp = angular.element(element);
+                moment.loadPersian();
+                moment.locale('fa');
+                scope.calendar = typeof attrs.calendar != 'undefined' ? scope.calendar : 'jalaali';
+                scope.format = typeof attrs.format != 'undefined' ? scope.format : (scope.calendar == 'jalaali' ? 'jYYYY-jMM-jDD' : 'YYYY-MM-DD');
+
+                scope.open = false;
+                scope.focusIndex = 0;
+
+                scope.focusItem = function(index) {
+                    var len = 3;
+                    if (index >= len) {
+                        scope.focusIndex = 0;
+                    } else if (index < 0) {
+                        scope.focusIndex = len - 1;
+                    } else {
+                        scope.focusIndex = index;
+                    }
+                    return true;
+                }
+
+                scope.itemClass = function(index) {
+                    if (index >= scope.displayOptions.length) {
+                        return false;
+                    }
+                    var item = scope.displayOptions[index];
+                    var ret = '';
+                    if (item.action == 'select') {
+                        if (scope.multiple) {
+                            if (scope.ngModel.indexOf(item.value) !== -1) {
+                                ret = 'active ';
+                            }
+                        } else {
+                            if (scope.ngModel == item.value) {
+                                ret = 'active ';
+                            }
+                        }
+                    }
+                    if (scope.focusIndex == index) {
+                        ret += 'focus';
+                    }
+
+                    return ret;
+                }
+
+                scope.date = moment.utc();
+
+                scope.vDate = {
+                    refresh: function() {
+                        scope.vDate.day = scope.date.format((scope.calendar == 'jalaali' ? 'j' : '') + 'D');
+                        scope.vDate.month = scope.date.format((scope.calendar == 'jalaali' ? 'j' : '') + 'MMMM');
+                        scope.vDate.year = scope.date.format((scope.calendar == 'jalaali' ? 'j' : '') + 'YYYY');
+                        scope.vDate.weekDay = scope.date.format('dddd');
+                        scope.vDate.monthName = scope.date.format('jMMMM');
+                        scope.vDate.display = scope.date.format('dddd, jD jMMMM jYYYY');
+                        scope.ngModel = scope.date.format(scope.format);
+                    }
+                };
+                if (scope.ngModel) {
+                    scope.date = moment(scope.ngModel, scope.format);
+                }
+                scope.vDate.refresh();
+                console.log(scope.vDate);
+
+
+                scope.math = function(action, type, value) {
+                    scope.date[action](value, type + 's');
+                    scope.vDate.refresh();
+
+                }
+                scope.promise = {};
+                scope.mathMousedown = function(event, action, type, value, interval) {
+                    scope.cancelPromise();
+                    if (event.which != 1 && event.button != 0) {
+                        return false;
+                    }
+                    interval = typeof interval == 'undefined' ? 400 : interval;
+                    interval = interval <= 50 ? 50 : interval;
+
+                    scope.promise = $timeout(function() {
+                        scope.math(action, type, value);
+                        scope.mathMousedown(event, action, type, value, interval - 50);
+                    }, interval);
+                }
+                scope.cancelPromise = function() {
+                    $timeout.cancel(scope.promise);
+                }
+
+                angular.element(element).bind('keydown', function(event) {
+                    var action = false;
+                    if (event.keyCode == 13 || event.keyCode == 27 || event.keyCode == 9) { //enter, tab. esc
+                        action = 'submit';
+                    } else if (event.keyCode >= 37 && event.keyCode <= 40) {
+                        action = ['left', 'add', 'right', 'subtract'][event.keyCode - 37];
+                    }
+                    if (action) {
+                        scope.$apply(function() {
+                            switch (action) {
+                                case 'submit':
+                                    scope.open = false;
+                                    break;
+                                case 'right':
+                                    scope.focusItem(scope.focusIndex - 1);
+                                    break;
+                                case 'left':
+                                    scope.focusItem(scope.focusIndex + 1);
+                                    break;
+                                case 'add':
+                                case 'subtract':
+                                    var cursorType = ['day', 'month', 'year'][scope.focusIndex];
+                                    scope.math(action, cursorType, 1);
+                            }
+                        });
+                        return false;
+                    }
+                })
+
+                scope.$watch('open', function(newVal) {
+                    scope.cancelPromise();
+                    if (newVal) {
+                        $timeout(function() {
+                            //element.focus();
+                        });
+                    } else {
+
+                    }
+                });
+
+
+                scope.globalClick = function(event) {
+                    var el = angular.element(event.target);
+                    if (el.hasClass('tf-datepicker')) {
+                        scope.open = false;
+                    } else if (el.hasClass('tf-datepicker-element') || el.hasClass('item')) {
+                        scope.open = true;
+                    }
+                }
+
+            },
+            template: '' +
+                '<div class="tf-datepicker-element" ng-class="{focus: open}" ng-focus="open=true" tabindex="0" ng-click="globalClick($event)">' +
+                '   <div class="tf-datepicker-element-inner">' +
+                '       <span class="item" ng-bind="ngModel"></span>' +
+                '   </div>' +
+                '   <div class="tf-overlay" ng-show="open"></div>' +
+                '   <div class="tf-datepicker" ng-show="open">' +
+                '       <div class="tf-datepicker-inner" ng-show="open">' +
+                '           <nav class="tf-navbar">' +
+                '              <section class="title"><h4 ng-bind="vDate.display"></h4></section>' +
+                '              <section class="icon button" ng-click="open = false"><i class="fa fa-check"></i></section>' +
+                '           </nav>' +
+                '           <div class="tf-container">' +
+                '               <div class="j" ng-repeat="type in [\'day\',\'month\',\'year\']" ng-class="{focus: focusIndex == $index}">' +
+                '                   <div class="button" ng-click="math(\'add\', type, 1)" ng-mousedown="mathMousedown($event, \'add\', type, 1)" ng-touchstart="ng-mousedown="mathMousedown($event, \'add\', type, 1)" ng-mouseup="cancelPromise()" ng-touchend="cancelPromise()"><i class="fa fa-chevron-up"></i></div>' +
+                '                   <div class="display" ng-bind="vDate[type]"></div>' +
+                '                   <div class="button" ng-click="math(\'subtract\', type, 1)" ng-mousedown="mathMousedown($event, \'subtract\', type, 1)" ng-touchstart="mathMousedown($event, \'subtract\', type, 1)" ng-mouseup="cancelPromise()" ng-touchend="cancelPromise()"><i class="fa fa-chevron-down"></i></div>' +
+                '               </div>' +
+                '           </div>' +
+                '       </div>' +
+                '   </div>' +
+                '</div>'
+        };
     })
     .directive('tfBottomSheet', function($timeout) {
         return {

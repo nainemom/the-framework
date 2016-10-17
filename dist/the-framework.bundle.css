@@ -8891,33 +8891,93 @@ th {
     -webkit-transition: all 120ms; }
 
 .tf-datepicker {
-  z-index: 39999;
-  position: absolute;
-  min-width: 150px;
-  background: #222222;
-  color: #fff;
-  margin-top: 8px;
-  -webkit-box-shadow: 0 6px 50px rgba(0, 0, 0, 0.15);
-  box-shadow: 0 6px 50px rgba(0, 0, 0, 0.15); }
-  .tf-datepicker, .tf-datepicker * {
-    text-align: center; }
-  .tf-datepicker > .j {
-    display: inline-block;
-    width: 33.333%;
-    max-width: 85px; }
-    .tf-datepicker > .j > * {
-      padding: 10px 0; }
-    .tf-datepicker > .j.active {
-      background: #2f2f2f; }
-  .tf-datepicker .button {
-    cursor: pointer; }
-  .tf-datepicker > .button {
-    border-top: solid 1px #3c3c3c;
-    padding: 12px 0; }
-  .tf-datepicker > .display {
-    background: #2196f3;
-    padding: 12px 0; }
+  position: fixed;
+  top: 0;
+  left: 0;
+  padding: 15px 45px;
+  width: 100%;
+  height: 100%;
+  z-index: 29999;
+  transition-duration: 220ms;
+  cursor: default; }
+  .tf-datepicker > .tf-datepicker-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+    transition-duration: 220ms;
+    background: #fff;
+    width: 100%;
+    max-width: 400px;
+    overflow: hidden;
+    margin: 0 auto;
+    z-index: 39999; }
+    .tf-datepicker > .tf-datepicker-inner.ng-hide {
+      opacity: 0; }
+    .tf-datepicker > .tf-datepicker-inner .tf-navbar {
+      cursor: default; }
+    .tf-datepicker > .tf-datepicker-inner .tf-container {
+      height: auto; }
+      .tf-datepicker > .tf-datepicker-inner .tf-container, .tf-datepicker > .tf-datepicker-inner .tf-container * {
+        text-align: center; }
+      .tf-datepicker > .tf-datepicker-inner .tf-container > .j {
+        display: inline-block;
+        width: 33.333%; }
+        .tf-datepicker > .tf-datepicker-inner .tf-container > .j > * {
+          padding: 10px 0; }
+        .tf-datepicker > .tf-datepicker-inner .tf-container > .j.focus {
+          background-color: #f7f7f7; }
+      .tf-datepicker > .tf-datepicker-inner .tf-container .button {
+        cursor: pointer; }
+      .tf-datepicker > .tf-datepicker-inner .tf-container > .button {
+        border-top: solid 1px #3c3c3c;
+        padding: 12px 0; }
 
+.tf-datepicker-element {
+  height: auto;
+  min-height: 37px;
+  cursor: text; }
+  .tf-datepicker-element .item {
+    cursor: text;
+    display: block; }
+
+/*
+.tf-datepicker {
+    z-index: 39999;
+    position: absolute;
+    min-width: 150px;
+    background: $text-color;
+    color: $body-bg;
+    margin-top: $padding-base-vertical;
+    @include box-shadow($long-shadow);
+    &,
+    & * {
+        text-align: center;
+    }
+    & > .j {
+        display: inline-block;
+        width: 33.333%;
+        max-width: 85px;
+        & > * {
+            padding: 10px 0;
+        }
+        &.active {
+            background: lighten($text-color, 5%);
+        }
+    }
+    & .button {
+        cursor: pointer;
+    }
+    & > .button {
+        border-top: solid 1px lighten($text-color, 10%);
+        padding: 12px 0;
+    }
+    & > .display {
+        background: $theme-color;
+        padding: 12px 0;
+    }
+}
+*/
 .tf-image-slider {
   position: relative;
   padding: 0 !important;
@@ -8976,7 +9036,8 @@ th {
     max-height: 100%;
     overflow: hidden;
     margin: 0 auto;
-    z-index: 39999; }
+    z-index: 39999;
+    box-shadow: 0 6px 50px rgba(0, 0, 0, 0.15); }
     .tf-select > .tf-select-inner.ng-hide {
       opacity: 0; }
     .tf-select > .tf-select-inner .tf-navbar {
@@ -8992,7 +9053,7 @@ th {
         margin: 0;
         cursor: pointer; }
         .tf-select > .tf-select-inner .tf-container > .list-group .list-group-item.focus {
-          background-color: #f2f2f2; }
+          background-color: #f7f7f7; }
           .tf-select > .tf-select-inner .tf-container > .list-group .list-group-item.focus.active {
             background-color: #39a1f4; }
 
