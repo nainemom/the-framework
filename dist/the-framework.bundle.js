@@ -40549,9 +40549,8 @@ angular.module('theFramework', ['ngRoute', 'ngAnimate', 'ngTouch', 'angular-caro
 
 
                 scope.search = function(text) {
-                    scope.searchText = text;
                     scope.displayOptions = [];
-                    if (text == '') {
+                    if (scope.searchText == '') {
                         for (var i = 0; i < scope.options.length; i++) {
                             scope.displayOptions.push(
                                 Object.assign(scope.options[i], { action: 'select' })
@@ -40560,20 +40559,20 @@ angular.module('theFramework', ['ngRoute', 'ngAnimate', 'ngTouch', 'angular-caro
                     } else {
                         var dublicate = false;
                         for (var i = 0; i < scope.options.length; i++) {
-                            if (text == '' || scope.options[i].text.indexOf(text) !== -1) {
+                            if (scope.searchText == '' || scope.options[i].text.indexOf(scope.searchText) !== -1) {
                                 scope.displayOptions.push(
                                     Object.assign(scope.options[i], { action: 'select' })
                                 );
                             }
-                            if (text == scope.options[i].value) {
+                            if (scope.searchText == scope.options[i].value) {
                                 dublicate = true;
                             }
                         }
 
-                        if (text != '' && scope.allowCreate && !dublicate) {
+                        if (scope.searchText != '' && scope.allowCreate && !dublicate) {
                             scope.displayOptions.push({
-                                value: text,
-                                text: 'اضافه کردن "' + text + '"',
+                                value: scope.searchText,
+                                text: 'اضافه کردن "' + scope.searchText + '"',
                                 action: 'create'
                             })
                         }
@@ -40687,11 +40686,13 @@ angular.module('theFramework', ['ngRoute', 'ngAnimate', 'ngTouch', 'angular-caro
                 })
 
                 scope.$watch('open', function(newVal) {
-                    if (newVal) {
+                    if (!newVal) {
                         $timeout(function() {
-                            scope.search('');
                             inp.focus();
-                        }, 150);
+                        });
+                    } else {
+                        scope.searchText = '';
+                        scope.search();
                     }
                 });
 
