@@ -25,8 +25,6 @@ module.exports = function(grunt) {
             buildjs: {
                 src: [
                     "node_modules/fastclick/lib/fastclick.js",
-                    "node_modules/browser-jquery/dist/jquery.min.js",
-                    "node_modules/selectize/dist/js/standalone/selectize.min.js",
                     'node_modules/moment/min/moment.min.js',
                     'modified_modules/moment-jalaali/moment-jalaali.js',
 

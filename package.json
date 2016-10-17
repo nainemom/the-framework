@@ -16,10 +16,8 @@
         "angular-carousel": "^1.0.1",
         "angular-route": "1.5.8",
         "angular-touch": "1.5.8",
-        "browser-jquery": "^1.10.2",
         "fastclick": "^1.0.6",
-        "moment": "^2.15.0",
-        "selectize": "0.12.1"
+        "moment": "^2.15.0"
     },
     "description": "An AngularJs mobile first framework for the Persian community.",
     "main": "gruntfile.js",
