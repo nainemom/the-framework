@@ -10,11 +10,9 @@ An AngularJs mobile first framework for the Persian community. I tried to write 
 - angular-route
 - angular-touch
 - bootstrap
-- jquery
 - fastclick
 - moment
 - moment-jalaali
-- selectize
 
 #### Directives:
 - tf-view
@@ -24,7 +22,7 @@ An AngularJs mobile first framework for the Persian community. I tried to write 
 - tf-sidebar
 - tf-searchbar
 - tf-image-slider
-- tf-selectize
+- tf-select
 - tf-switch
 - tf-datepicker
 - tf-bottom-sheet
