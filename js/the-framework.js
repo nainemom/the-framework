@@ -388,7 +388,8 @@ angular.module('theFramework', ['ngRoute', 'ngAnimate', 'ngTouch', 'angular-caro
             transclude: false,
             scope: {
                 options: '=',
-                ngModel: '='
+                ngModel: '=',
+                placeholder: '@?'
             },
             link: function(scope, element, attrs) {
                 var inp = element.find('input')[0];
@@ -397,6 +398,8 @@ angular.module('theFramework', ['ngRoute', 'ngAnimate', 'ngTouch', 'angular-caro
 
                 scope.multiple = typeof attrs.multiple != 'undefined' ? true : false;
                 scope.allowCreate = typeof attrs.allowCreate != 'undefined' ? true : false;
+                scope.allowDelete = typeof attrs.allowDelete != 'undefined' ? true : false;
+                scope.placeholder = typeof scope.placeholder != 'undefined' ? scope.placeholder : 'انتخاب کنید...';
 
                 scope.searchText = '';
 
@@ -482,6 +485,25 @@ angular.module('theFramework', ['ngRoute', 'ngAnimate', 'ngTouch', 'angular-caro
                     });
                     return true;
                 }
+                scope.deleteItem = function(index) {
+                    $timeout(function() {
+                        var item = scope.displayOptions[index];
+                        scope.displayOptions.splice(
+                            index, 1
+                        );
+                        scope.focusItem(index - 1);
+
+                        for (var i = 0; i < scope.options.length; i++) {
+                            if (scope.options[i].value == item.value) {
+                                scope.options.splice(
+                                    i, 1
+                                );
+                                break;
+                            }
+                        }
+                    });
+                    return true;
+                }
                 scope.focusItem = function(index) {
                     var len = scope.displayOptions.length;
                     if (index >= len) {
@@ -495,6 +517,19 @@ angular.module('theFramework', ['ngRoute', 'ngAnimate', 'ngTouch', 'angular-caro
                     return true;
                 }
 
+                scope.isSelected = function(index) {
+                    var item = scope.displayOptions[index];
+                    if (scope.multiple) {
+                        if (scope.ngModel.indexOf(item.value) !== -1) {
+                            return true;
+                        }
+                    } else {
+                        if (scope.ngModel == item.value) {
+                            return true;
+                        }
+                    }
+                    return false;
+                }
                 scope.itemClass = function(index) {
                     if (index >= scope.displayOptions.length) {
                         return false;
@@ -502,14 +537,8 @@ angular.module('theFramework', ['ngRoute', 'ngAnimate', 'ngTouch', 'angular-caro
                     var item = scope.displayOptions[index];
                     var ret = '';
                     if (item.action == 'select') {
-                        if (scope.multiple) {
-                            if (scope.ngModel.indexOf(item.value) !== -1) {
-                                ret = 'active ';
-                            }
-                        } else {
-                            if (scope.ngModel == item.value) {
-                                ret = 'active ';
-                            }
+                        if (scope.isSelected(index)) {
+                            ret = 'active ';
                         }
                     }
                     if (scope.focusIndex == index) {
@@ -589,6 +618,7 @@ angular.module('theFramework', ['ngRoute', 'ngAnimate', 'ngTouch', 'angular-caro
                 '   <div class="tf-select-element-inner">' +
                 '       <span class="item item-multiple" ng-if="multiple" ng-repeat="item in displayVal() track by $index" ng-bind="item"></span>' +
                 '       <span class="item item-single" ng-if="!multiple" ng-bind="displayVal()"></span>' +
+                '       <span class="item item-single" ng-if="displayVal().length == 0" ng-bind="placeholder"></span>' +
                 '   </div>' +
                 '   <div class="tf-overlay" ng-show="open"></div>' +
                 '   <div class="tf-select tf-modal" ng-show="open">' +
@@ -599,7 +629,7 @@ angular.module('theFramework', ['ngRoute', 'ngAnimate', 'ngTouch', 'angular-caro
                 '           </nav>' +
                 '           <div class="tf-container">' +
                 '               <ul class="list-group block">' +
-                '                   <li class="list-group-item" ng-repeat="item in displayOptions" ng-bind="item.text" ng-mouseover="focusItem($index)" ng-click="clickItem($index)" ng-class="itemClass($index)"></li>' +
+                '                   <li class="list-group-item" ng-repeat="item in displayOptions" ng-mouseover="focusItem($index)" ng-class="itemClass($index)"><div class="pull-right" ng-bind="item.text" ng-click="clickItem($index)"></div><i ng-click="deleteItem($index)" ng-if="item.action == \'select\' && allowDelete && !isSelected($index)" class="fa fa-remove text-danger pull-left"></i><div style="clear: both;"></div></li>' +
                 '               </ul>' +
                 '           </div>' +
                 '       </div>' +

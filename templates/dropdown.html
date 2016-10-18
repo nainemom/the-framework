@@ -30,8 +30,8 @@
             <tf-select class="form-control" ng-model="inputs.model[2]" options="options" allow-create></tf-select>
         </div>
         <div class="form-group col-sm-6 col-xs-12">
-            <label class="control-label">با قابلیت اضافه‌کردن چندتایی</label>
-            <tf-select class="form-control" ng-model="inputs.model[3]" options="options" multiple allow-create></tf-select>
+            <label class="control-label">با قابلیت حذف کردن </label>
+            <tf-select class="form-control" placeholder="حذف کنید!" ng-model="inputs.model[3]" options="options" allow-create allow-delete></tf-select>
         </div>
     </div>
 </div>
@@ -50,8 +50,8 @@
         در نسخه قبلی، دایرکتیوی تحت پلاگین selectize در jquery نوشته شده بود. در این نسخه، این دایرکتیو تماما توسط angularjs و بدون وابستگی دیگر ایجاد شده است.
     </p>
     <p>
-        برای انتخاب چند گزینه از اتریبیوت multiple و برای امکان اضافه‌کردن آیتم توسط کاربر از اتریبیوت allow-create استفاده کنید. همچنین گزینه‌های از پیش تعیین شده، در قالب آرایه در جاوااسکریپت مقدار گرفته و به اتریبیوت options پاس داده می‌شوند. اتریبیوت ng-model
-        هم به عنوان مدل این المنت استفاده می‌شود.
+        برای انتخاب چند گزینه از اتریبیوت multiple، برای امکان اضافه‌کردن آیتم توسط کاربر از اتریبیوت allow-create و برای اجازه حذف آیتم‌ها از allow-delete استفاده کنید و برای متن نمایشی قبل از انتخاب از placeholder استفاده کنید. همچنین گزینه‌های از پیش تعیین
+        شده، در قالب آرایه در جاوااسکریپت مقدار گرفته و به اتریبیوت options پاس داده می‌شوند. اتریبیوت ng-model هم به عنوان مدل این المنت استفاده می‌شود.
     </p>
 
     <pre>
