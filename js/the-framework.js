@@ -394,7 +394,7 @@ angular.module('theFramework', ['ngRoute', 'ngAnimate', 'ngTouch', 'angular-caro
             link: function(scope, element, attrs) {
                 var inp = element.find('input')[0];
                 scope.open = false;
-                scope.displayOptions = [];
+                v = [];
 
                 scope.multiple = typeof attrs.multiple != 'undefined' ? true : false;
                 scope.allowCreate = typeof attrs.allowCreate != 'undefined' ? true : false;
@@ -411,7 +411,7 @@ angular.module('theFramework', ['ngRoute', 'ngAnimate', 'ngTouch', 'angular-caro
                     if (scope.searchText == '') {
                         for (var i = 0; i < scope.options.length; i++) {
                             scope.displayOptions.push(
-                                Object.assign(scope.options[i], { action: 'select' })
+                                angular.extend(scope.options[i], { action: 'select' })
                             );
                         }
                     } else {
@@ -419,7 +419,7 @@ angular.module('theFramework', ['ngRoute', 'ngAnimate', 'ngTouch', 'angular-caro
                         for (var i = 0; i < scope.options.length; i++) {
                             if (scope.searchText == '' || scope.options[i].text.indexOf(scope.searchText) !== -1) {
                                 scope.displayOptions.push(
-                                    Object.assign(scope.options[i], { action: 'select' })
+                                    angular.extend(scope.options[i], { action: 'select' })
                                 );
                             }
                             if (scope.searchText == scope.options[i].value) {
