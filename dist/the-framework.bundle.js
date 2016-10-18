@@ -40734,8 +40734,8 @@ angular.module('theFramework', ['ngRoute', 'ngAnimate', 'ngTouch', 'angular-caro
                 '       <span class="item item-single" ng-if="!multiple" ng-bind="displayVal()"></span>' +
                 '   </div>' +
                 '   <div class="tf-overlay" ng-show="open"></div>' +
-                '   <div class="tf-select" ng-show="open">' +
-                '       <div class="tf-select-inner" ng-show="open">' +
+                '   <div class="tf-select tf-modal" ng-show="open">' +
+                '       <div class="tf-select-inner tf-modal-inner" ng-show="open">' +
                 '           <nav class="tf-navbar">' +
                 '              <section class="title"><input ng-model="searchText" ng-change="search(searchText)" class="form-control" placeholder="نام گزینه مورد نظر را وارد کنید..."/></section>' +
                 '              <section class="icon button" ng-click="open = false"><i class="fa fa-check"></i></section>' +
@@ -41110,8 +41110,8 @@ angular.module('theFramework', ['ngRoute', 'ngAnimate', 'ngTouch', 'angular-caro
                 '       <span class="item" ng-bind="ngModel"></span>' +
                 '   </div>' +
                 '   <div class="tf-overlay" ng-show="open"></div>' +
-                '   <div class="tf-datepicker" ng-show="open">' +
-                '       <div class="tf-datepicker-inner" ng-show="open">' +
+                '   <div class="tf-datepicker tf-modal" ng-show="open">' +
+                '       <div class="tf-datepicker-inner tf-modal-inner" ng-show="open">' +
                 '           <nav class="tf-navbar">' +
                 '              <section class="title"><h4 ng-bind="vDate.display"></h4></section>' +
                 '              <section class="icon button" ng-click="open = false"><i class="fa fa-check"></i></section>' +

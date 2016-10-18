@@ -561,3 +561,41 @@ hr {
         opacity: 0;
     }
 }
+
+.tf-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    padding: $vertical-padding #{$horizontal-padding*3};
+    width: 100%;
+    height: 100%;
+    z-index: 29999;
+    transition-duration: $animation-speed-normal;
+    & > .tf-modal-inner {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        justify-content: flex-start;
+        transition-duration: $animation-speed-normal;
+        background: $body-bg;
+        width: 100%;
+        height: auto;
+        max-width: 400px;
+        max-height: 100%;
+        overflow: hidden;
+        margin: 0 auto;
+        z-index: 39999;
+        box-shadow: $long-shadow;
+        &.ng-hide {
+            opacity: 0;
+        }
+        & .tf-navbar {
+            cursor: default;
+        }
+        & .tf-container {
+            overflow-y: auto;
+            height: auto;
+            max-height: 100%;
+        }
+    }
+}
