@@ -41019,7 +41019,8 @@ angular.module('theFramework', ['ngRoute', 'ngAnimate', 'ngTouch', 'angular-caro
                         scope.vDate.year = scope.date.format((scope.calendar == 'jalaali' ? 'j' : '') + 'YYYY');
                         scope.vDate.weekDay = scope.date.format('dddd');
                         scope.vDate.monthName = scope.date.format('jMMMM');
-                        scope.vDate.display = scope.date.format('dddd, jD jMMMM jYYYY');
+                        scope.vDate.displayOne = scope.calendar == 'jalaali' ? scope.date.format('dddd, jD jMMMM jYYYY') : scope.date.format('dddd, D MMMM YYYY');
+                        scope.vDate.displayTwo = scope.calendar == 'jalaali' ? scope.date.format('D MMMM YYYY') : scope.date.format('jD jMMMM jYYYY');
                         scope.ngModel = scope.date.format(scope.format);
                     }
                 };
@@ -41113,11 +41114,11 @@ angular.module('theFramework', ['ngRoute', 'ngAnimate', 'ngTouch', 'angular-caro
                 '   <div class="tf-datepicker tf-modal" ng-show="open">' +
                 '       <div class="tf-datepicker-inner tf-modal-inner" ng-show="open">' +
                 '           <nav class="tf-navbar">' +
-                '              <section class="title"><h4 ng-bind="vDate.display"></h4></section>' +
+                '              <section class="title"><h4 ng-bind="vDate.displayOne"></h4><p ng-bind="vDate.displayTwo"></p></section>' +
                 '              <section class="icon button" ng-click="open = false"><i class="fa fa-check"></i></section>' +
                 '           </nav>' +
                 '           <div class="tf-container">' +
-                '               <div class="j" ng-repeat="type in [\'day\',\'month\',\'year\']" ng-class="{focus: focusIndex == $index}">' +
+                '               <div class="j" ng-repeat="type in [\'day\',\'month\',\'year\']" ng-mouseover="focusItem($index)" ng-class="{focus: focusIndex == $index}">' +
                 '                   <div class="button" ng-click="math(\'add\', type, 1)" ng-mousedown="mathMousedown($event, \'add\', type, 1)" ng-touchstart="ng-mousedown="mathMousedown($event, \'add\', type, 1)" ng-mouseup="cancelPromise()" ng-touchend="cancelPromise()"><i class="fa fa-chevron-up"></i></div>' +
                 '                   <div class="display" ng-bind="vDate[type]"></div>' +
                 '                   <div class="button" ng-click="math(\'subtract\', type, 1)" ng-mousedown="mathMousedown($event, \'subtract\', type, 1)" ng-touchstart="mathMousedown($event, \'subtract\', type, 1)" ng-mouseup="cancelPromise()" ng-touchend="cancelPromise()"><i class="fa fa-chevron-down"></i></div>' +
