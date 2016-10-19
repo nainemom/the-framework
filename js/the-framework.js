@@ -72,7 +72,7 @@ angular.module('theFramework', ['ngRoute', 'ngAnimate', 'ngTouch', 'angular-caro
                     var k = p,
                         v = obj[p];
                     str.push(typeof v == "object" ?
-                        serialize(v, k) :
+                        self.serialize(v, k) :
                         encodeURIComponent(k) + "=" + encodeURIComponent(v));
                 }
             }
