@@ -10,6 +10,7 @@
     margin-left: 2px;
     margin-right: 2px;
     transform: translateY(25%);
+    -webkit-transform: translateY(25%);
     transition: all $animation-speed-fast;
     -webkit-transition: all $animation-speed-fast;
     &.checked {
@@ -23,6 +24,7 @@
         width: 23px;
         height: 23px;
         transform: translateY(-4px);
+        -webkit-transform: translateY(-4px);
         margin-right: -1px;
         display: block;
         background-color: darken($body-bg, 4%);

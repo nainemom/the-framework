@@ -27,6 +27,7 @@
             position: relative;
             cursor: pointer;
             transition-duration: $animation-speed-fast;
+            -webkit-transition-duration: $animation-speed-fast;
             &.current {
                 background: $theme-color;
                 width: 15px;

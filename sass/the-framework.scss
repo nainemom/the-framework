@@ -268,7 +268,7 @@ hr {
 
 .tf-container {
     overflow: auto;
-    min-height: 100%;
+    height: auto;
 }
 
 .tf-navbar,
@@ -343,7 +343,9 @@ hr {
 .tf-navbar {
     z-index: 19999;
     transition-duration: $animation-speed-normal;
+    -webkit-transition-duration: $animation-speed-normal;
     transform: translate3d(0, 0, 0);
+    -webkit-transform: translate3d(0, 0, 0);
     &.ng-hide {
         margin-bottom: -1 * $navbar-height;
         opacity: 0.07;
@@ -384,6 +386,7 @@ hr {
     align-content: stretch;
     justify-content: flex-start;
     transition-duration: $animation-speed-normal;
+    -webkit-transition-duration: $animation-speed-normal;
     overflow: hidden;
     & > li {
         text-align: center;
@@ -419,6 +422,7 @@ hr {
     background: rgba(0, 0, 0, 0.2);
     opacity: 1;
     transition-duration: $animation-speed-normal;
+    -webkit-transition-duration: $animation-speed-normal;
     &.ng-hide {
         opacity: 0;
     }
@@ -434,8 +438,11 @@ hr {
     overflow-y: auto;
     width: $sidebar-width;
     transition-duration: $animation-speed-normal;
+    -webkit-transition-duration: $animation-speed-normal;
     transform: translate3d(0, 0, 0);
+    -webkit-transform: translate3d(0, 0, 0);
     transition-timing-function: ease-out;
+    -webkit-transition-timing-function: ease-out;
     & > .list-group {
         margin: 0;
         cursor: pointer;
@@ -452,8 +459,10 @@ hr {
     }
     &.ng-hide {
         transform: translate3d( #{-1 * $sidebar-width}, 0, 0);
+        -webkit-transform: translate3d( #{-1 * $sidebar-width}, 0, 0);
         &.right {
             transform: translate3d( $sidebar-width, 0, 0);
+            -webkit-transform: translate3d( $sidebar-width, 0, 0);
         }
     }
 }
@@ -466,10 +475,14 @@ hr {
     bottom: 0;
     width: 100%;
     transition-duration: $animation-speed-normal;
+    -webkit-transition-duration: $animation-speed-normal;
     transform: translate3d(0, 0, 0);
+    -webkit-transform: translate3d(0, 0, 0);
     transition-timing-function: ease-out;
+    -webkit-transition-timing-function: ease-out;
     &.ng-hide {
         transform: translate3d( 0, 100%, 0);
+        -webkit-transform: translate3d( 0, 100%, 0);
     }
     & > .tf-label {
         padding: $vertical-padding $horizontal-padding;
@@ -500,6 +513,7 @@ hr {
     z-index: 30002;
     opacity: 1;
     transition-duration: $animation-speed-fast;
+    -webkit-transition-duration: $animation-speed-fast;
     & div {
         margin: 0 auto;
         padding: $padding-xs-horizontal $padding-small-horizontal;
@@ -523,6 +537,7 @@ hr {
     bottom: $horizontal-padding * 2;
     z-index: 30001;
     transition-duration: $animation-speed-fast;
+    -webkit-transition-duration: $animation-speed-fast;
     & div {
         margin: 0 auto;
         position: relative;
@@ -557,6 +572,7 @@ hr {
     box-shadow: $long-shadow;
     opacity: 1;
     transition-duration: $animation-speed-normal;
+    -webkit-transition-duration: $animation-speed-normal;
     &.ng-hide {
         opacity: 0;
     }
@@ -571,12 +587,14 @@ hr {
     height: 100%;
     z-index: 29999;
     transition-duration: $animation-speed-normal;
+    -webkit-transition-duration: $animation-speed-normal;
     & > .tf-modal-inner {
         display: flex;
         flex-direction: column;
         align-items: stretch;
         justify-content: flex-start;
         transition-duration: $animation-speed-normal;
+        -webkit-transition-duration: $animation-speed-normal;
         background: $body-bg;
         width: 100%;
         height: auto;
