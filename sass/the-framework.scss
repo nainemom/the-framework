@@ -547,6 +547,7 @@ hr {
         border-bottom: $padding-base-vertical solid rgba($theme-color, 0.3);
         border-left: $padding-base-vertical solid $theme-color;
         animation: spin $animation-speed-slow infinite linear;
+        -webkit-animation: spin $animation-speed-slow infinite linear;
         &,
         &:after {
             border-radius: 50%;
