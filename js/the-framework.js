@@ -1,5 +1,9 @@
 var log = alert;
 var isCordova = typeof window.cordova == 'undefined' ? false : true;
+document.addEventListener("deviceready", function(){
+    isCordova = true;
+}, false);
+
 
 angular.module('theFramework', ['ngRoute', 'ngAnimate', 'ngTouch', 'angular-carousel'])
     .run(function($rootScope) {
@@ -1064,7 +1068,7 @@ angular.module('theFramework', ['ngRoute', 'ngAnimate', 'ngTouch', 'angular-caro
                 if (isCordova) {
                     element.bind('click', function(event) {
                         if (typeof navigator.camera.getPicture == 'undefined') {
-                            log('Faild to load cordova-plugin-mfilechooser');
+                            log('Faild to load cordova-plugin-camera');
                         } else {
                             navigator.camera.getPicture(function(res) {
                                 scope.fileChanged(res);
