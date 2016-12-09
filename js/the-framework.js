@@ -105,7 +105,7 @@ angular.module('theFramework', ['ngRoute', 'ngAnimate', 'ngTouch', 'angular-caro
                     dt = {};
                     var cordovaFile = false;
                     for (var i in data) {
-                        if (typeof data[i] == 'object' && data[i]._cordovaFile) {
+                        if ('_cordovaFile' in data[i]) {
                             cordovaFile = data[i].uri;
                         } else {
                             dt[i] = data[i];
