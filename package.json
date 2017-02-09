@@ -1,6 +1,6 @@
 {
     "name": "the-framework",
-    "version": "0.0.5",
+    "version": "0.0.6",
     "devDependencies": {
         "grunt": "1.0.0",
         "grunt-contrib-concat": "^1.0.1",
