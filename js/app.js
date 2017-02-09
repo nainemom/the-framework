@@ -121,13 +121,15 @@ angular.module('app', ['theFramework'])
         }
     })
     .controller('ImageSlider', function($scope) {
-        $scope.images = [{
-            src: 'http://lorempixel.com/500/300/people/1/',
-            alt: 'The Beach'
+        $scopeimages = [{
+            src: 'images/1.jpg',
+            text: 'The Beach',
+            url: 'https://google.com'
         }, {
-            src: 'http://lorempixel.com/500/300/people/2/'
+            src: 'images/2.jpg',
+            text: 'Salam!'
         }, {
-            src: 'http://lorempixel.com/500/300/people/3/'
+            src: 'images/3.jpg'
         }];
     })
     .controller('BottomSheet', function($scope) {

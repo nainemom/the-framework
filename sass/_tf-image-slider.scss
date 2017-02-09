@@ -9,6 +9,17 @@
         width: 100%;
         background-position: center;
         background-size: cover;
+        & .bgtext{
+            color: $body-bg;
+            font-weight: bold;
+            font-size: 20px;
+            display: block;
+            text-align: center;
+            width: 100%;
+            background: rgba($theme-color, 0.45);
+            padding: 8px;
+            cursor: pointer;
+        }
     }
     .tf-image-slider-pagination {
         left: 0;

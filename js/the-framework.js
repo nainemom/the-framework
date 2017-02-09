@@ -147,7 +147,7 @@ angular.module('theFramework', ['ngRoute', 'ngAnimate', 'ngTouch', 'angular-caro
                     } else {
                         var formData = new FormData();
                         for (var i in data) {
-                            if (typeof data[i] == 'object' && data[i]._browserFile) {
+                            if (typeof data[i] == 'object' && data[i] !== null && data[i]._browserFile) {
                                 formData.append('file', data[i].file);
                             } else {
                                 formData.append(i, data[i]);
@@ -360,7 +360,14 @@ angular.module('theFramework', ['ngRoute', 'ngAnimate', 'ngTouch', 'angular-caro
                     //height: '@?'
             },
             link: function(scope, element, attrs) {
-                scope.images = scope.ngModel || [];
+                scope.images = [];
+                for( var i = 0; i < scope.ngModel.length; i++ ){
+                    scope.images.push({
+                        src: scope.ngModel[i].src? scope.ngModel[i].src: scope.ngModel[i],
+                        text: scope.ngModel[i].text? scope.ngModel[i].text: '',
+                        url: scope.ngModel[i].url? scope.ngModel[i].url: '',
+                    })
+                }
                 scope.index = scope.index || 0;
                 scope.height = attrs.height || 300;
                 scope.height += 'px';
@@ -373,6 +380,7 @@ angular.module('theFramework', ['ngRoute', 'ngAnimate', 'ngTouch', 'angular-caro
                         '<ul rn-carousel rn-carousel-controls rn-carousel-index="index" rn-carousel-pause-on-hover rn-carousel-buffered ng-style="{height: height}">' +
                         '<li ng-repeat="slide in images">' +
                         '   <div ng-style="{\'background-image\': \'url(\' + slide.src + \')\', height: height}"  class="bgimage">' +
+                        '       <a class="bgtext" ng-if="slide.text" ng-bind="slide.text" ng-href="{{slide.url}}"></a>' +
                         '   </div>' +
                         '</li>' +
                         '</ul>' +
